@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hopital-Connexion{% endblock %}
+
+{% block body %}
+
+ <div class="row flex-center min-vh-100 py-6">
+          <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4"><a class="d-flex flex-center mb-4" href="../../../index.html"><img class="me-2" src="../../../assets/img/icons/spot-illustrations/falcon.png" alt="" width="58" /><span class="font-sans-serif fw-bolder fs-5 d-inline-block">falcon</span></a>
+            <div class="card">
+              <div class="card-body p-4 p-sm-5">
+                <div class="row flex-between-center mb-2">
+                  <div class="col-auto">
+                    <h5>Connexion </h5>
+                  </div>
+                <!--  <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="register.html">Create an account</a></span></div> -->
+                </div>
+                {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+                <form action={{ path('auth_ctrl_login') }} method="post">
+
+                  <div class="mb-3"><input class="form-control" type="text" placeholder="Email address" id="username" name="_username"/></div>
+                  <div class="mb-3"><input class="form-control" type="password" placeholder="Password" id="password" name="_password"/></div>
+                  <div class="row flex-between-center">
+                    
+            
+                  </div>
+                  <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button></div>
+                </form>
+
+              <!--  <div class="position-relative mt-4">
+                  <hr class="bg-300" />
+                  <div class="divider-content-center">or log in with</div>
+                </div>
+                <div class="row g-2 mt-2">
+                  <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="#"><span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> google</a></div>
+                  <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="#"><span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> facebook</a></div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock %}
+{% block addjs %}
+
+{% endblock %}
