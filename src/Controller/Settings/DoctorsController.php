@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\RendezVous;
+namespace App\Controller\Settings;
 
 use App\Entity\TLogin;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,17 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('auth', name: 'auth_ctrl_')]
-class RendezVousController extends AbstractController
+#[Route('doctors', name: 'doctors_ctrl_')]
+class DoctorsController extends AbstractController
 {
-    // private ObjectManager $manager;
+   
 
-    // public function __construct(ObjectManager $manager)
-    // {
-    //     $this->manager = $manager;        
-    // }
+    #[Route('', name: 'doctors')]
+    #[Template('settings/doctors.html.twig')]
+    public function home(): array
+    {
 
-
-
-    
+        return [];
+    }
 }
