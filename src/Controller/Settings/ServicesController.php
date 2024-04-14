@@ -24,7 +24,7 @@ class ServicesController extends AbstractController
 
 
     #[Route('', name: 'services')]
-    #[Template('dashboard/services.html.twig')]
+    #[Template('settings/services.html.twig')]
     public function home(): array
     {
 

@@ -3,6 +3,7 @@
 namespace App\Controller\Settings;
 
 use App\Entity\TLogin;
+use App\Repository\TLoginRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -14,12 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('users', name: 'users_ctrl_')]
 class UsersController extends AbstractController
 {
-    // private ObjectManager $manager;
+    private TLoginRepository $loginRepository;
 
-    // public function __construct(ObjectManager $manager)
-    // {
-    //     $this->manager = $manager;        
-    // }
+     public function __construct(TLoginRepository $loginRepository)
+    {
+         $this->loginRepository = $loginRepository;        
+     }
 
 
 
@@ -27,6 +28,8 @@ class UsersController extends AbstractController
     #[Template('settings/users.html.twig')]
     public function index(): array
     {
+
+        $users = $this->loginRepository->findBy(['state'=>true]);
 
         
         // $user = new TLogin();
@@ -40,6 +43,8 @@ class UsersController extends AbstractController
         // $entityManager->persist($user);
         // $entityManager->flush();
 
-        return [];
+        return [
+            'users'=> $users
+        ];
     }
 }

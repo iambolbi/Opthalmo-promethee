@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
+use App\Entity\Utils\TraitEntity;
 use App\Repository\TPatientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name:"t_patient")]
 #[ORM\Entity(repositoryClass: TPatientRepository::class)]
 class TPatient
 {
+    use TraitEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -25,6 +30,15 @@ class TPatient
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
+
+    #[ORM\OneToMany(targetEntity: TRendezVous::class, mappedBy: 'fk_patient')]
+    private Collection $tRendezVouses;
+
+    public function __construct()
+    {
+        
+        $this->tRendezVouses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +89,36 @@ class TPatient
     public function setAdresse(?string $adresse): static
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TRendezVous>
+     */
+    public function getTRendezVouses(): Collection
+    {
+        return $this->tRendezVouses;
+    }
+
+    public function addTRendezVouse(TRendezVous $tRendezVouse): static
+    {
+        if (!$this->tRendezVouses->contains($tRendezVouse)) {
+            $this->tRendezVouses->add($tRendezVouse);
+            $tRendezVouse->setFkPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTRendezVouse(TRendezVous $tRendezVouse): static
+    {
+        if ($this->tRendezVouses->removeElement($tRendezVouse)) {
+            // set the owning side to null (unless already changed)
+            if ($tRendezVouse->getFkPatient() === $this) {
+                $tRendezVouse->setFkPatient(null);
+            }
+        }
 
         return $this;
     }

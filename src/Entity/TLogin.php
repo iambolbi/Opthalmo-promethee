@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Utils\TraitEntity;
 use App\Repository\TLoginRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,6 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name:"t_login")]
 class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TraitEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -31,6 +36,19 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(targetEntity: TUserRole::class, mappedBy: 'fk_login')]
+    private Collection $tUserRoles;
+
+    #[ORM\OneToMany(targetEntity: TRendezVous::class, mappedBy: 'fk_login')]
+    private Collection $tRendezVouses;
+
+    public function __construct()
+    {
+        
+        $this->tUserRoles = new ArrayCollection();
+        $this->tRendezVouses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,5 +123,65 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, TUserRole>
+     */
+    public function getTUserRoles(): Collection
+    {
+        return $this->tUserRoles;
+    }
+
+    public function addTUserRole(TUserRole $tUserRole): static
+    {
+        if (!$this->tUserRoles->contains($tUserRole)) {
+            $this->tUserRoles->add($tUserRole);
+            $tUserRole->setFkLogin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTUserRole(TUserRole $tUserRole): static
+    {
+        if ($this->tUserRoles->removeElement($tUserRole)) {
+            // set the owning side to null (unless already changed)
+            if ($tUserRole->getFkLogin() === $this) {
+                $tUserRole->setFkLogin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TRendezVous>
+     */
+    public function getTRendezVouses(): Collection
+    {
+        return $this->tRendezVouses;
+    }
+
+    public function addTRendezVouse(TRendezVous $tRendezVouse): static
+    {
+        if (!$this->tRendezVouses->contains($tRendezVouse)) {
+            $this->tRendezVouses->add($tRendezVouse);
+            $tRendezVouse->setFkLogin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTRendezVouse(TRendezVous $tRendezVouse): static
+    {
+        if ($this->tRendezVouses->removeElement($tRendezVouse)) {
+            // set the owning side to null (unless already changed)
+            if ($tRendezVouse->getFkLogin() === $this) {
+                $tRendezVouse->setFkLogin(null);
+            }
+        }
+
+        return $this;
     }
 }

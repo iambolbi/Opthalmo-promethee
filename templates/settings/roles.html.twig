@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hopital | Prestations{% endblock %}
+{% block title %}Hopital | Rôles{% endblock %}
 
 {% block base_content %}
 
+      
   <div class="card h-100" id="table" data-list='{"valueNames":["name","email","age"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
     <div class="card-header">
       <div class="row flex-between-center">
         <div class="col-auto col-sm-6 col-lg-7">
-          <h6 class="mb-0 text-nowrap py-2 py-xl-0 fs-2">Prestations</h6>
+          <h6 class="mb-0 text-nowrap py-2 py-xl-0 fs-2">Rôles</h6>
         </div>
         <div class="col-auto col-sm-6 col-lg-5">
           <div class="h-100">
@@ -113,7 +114,7 @@
 
       </div>
       <div class="text-center d-none" id="pages-table-fallback">
-        <p class="fw-bold fs-1 mt-3">Aucune prestation ne  correspond à votre recherche</p>
+        <p class="fw-bold fs-1 mt-3">Aucun rôle ne  correspond à votre recherche</p>
       </div>
     </div>
     <div class="card-footer">
@@ -125,8 +126,9 @@
         <div class="col-auto d-flex"><button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button><button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button></div>
       </div>
     </div>
-  </div>    
+  </div>
 
+  
 {% endblock %}
 {% block addjs %}
 

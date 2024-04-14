@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
-use App\Repository\TAssuranceRepository;
+use App\Repository\TPrestationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Table(name:"t_assurance")]
-#[ORM\Entity(repositoryClass: TAssuranceRepository::class)]
-class TAssurance
+#[ORM\Table(name:"t_prestation")]
+#[ORM\Entity(repositoryClass: TPrestationRepository::class)]
+class TPrestation
 {
     use TraitEntity;
     
@@ -23,9 +23,9 @@ class TAssurance
     private ?string $libelle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $code = null;
+    private ?string $valeur = null;
 
-    #[ORM\OneToMany(targetEntity: TRendezPrestation::class, mappedBy: 'fk_assurance')]
+    #[ORM\OneToMany(targetEntity: TRendezPrestation::class, mappedBy: 'fk_prestation')]
     private Collection $tRendezPrestations;
 
     public function __construct()
@@ -50,14 +50,14 @@ class TAssurance
         return $this;
     }
 
-    public function getCode(): ?string
+    public function getValeur(): ?string
     {
-        return $this->code;
+        return $this->valeur;
     }
 
-    public function setCode(?string $code): static
+    public function setValeur(?string $valeur): static
     {
-        $this->code = $code;
+        $this->valeur = $valeur;
 
         return $this;
     }
@@ -74,7 +74,7 @@ class TAssurance
     {
         if (!$this->tRendezPrestations->contains($tRendezPrestation)) {
             $this->tRendezPrestations->add($tRendezPrestation);
-            $tRendezPrestation->setFkAssurance($this);
+            $tRendezPrestation->setFkPrestation($this);
         }
 
         return $this;
@@ -84,8 +84,8 @@ class TAssurance
     {
         if ($this->tRendezPrestations->removeElement($tRendezPrestation)) {
             // set the owning side to null (unless already changed)
-            if ($tRendezPrestation->getFkAssurance() === $this) {
-                $tRendezPrestation->setFkAssurance(null);
+            if ($tRendezPrestation->getFkPrestation() === $this) {
+                $tRendezPrestation->setFkPrestation(null);
             }
         }
 

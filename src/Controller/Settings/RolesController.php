@@ -20,18 +20,6 @@ class RolesController extends AbstractController
     public function index(): array
     {
 
-        
-        // $user = new TLogin();
-        // $user->setUsername('adminit');
-
-        // $pass = 'adminit';
-        // $hashPassword = $passwordHasher->hashPassword($user,$pass);
-
-        // $user->setPassword($hashPassword);
-        
-        // $entityManager->persist($user);
-        // $entityManager->flush();
-
         return [];
     }
 }
