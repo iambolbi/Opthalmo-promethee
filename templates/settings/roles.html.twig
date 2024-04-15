@@ -4,132 +4,213 @@
 
 {% block base_content %}
 
-      
-  <div class="card h-100" id="table" data-list='{"valueNames":["name","email","age"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
-    <div class="card-header">
-      <div class="row flex-between-center">
-        <div class="col-auto col-sm-6 col-lg-7">
-          <h6 class="mb-0 text-nowrap py-2 py-xl-0 fs-2">Rôles</h6>
-        </div>
-        <div class="col-auto col-sm-6 col-lg-5">
-          <div class="h-100">
-            <form>
-              <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search for a page" aria-label="search" />
-                <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card-body px-0 py-0">
-      <div class="table-responsive scrollbar">
-        
-      <table class="table table-bordered table-striped fs--1 mb-0">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th class="sort" data-sort="name">Name</th>
-            <th class="sort" data-sort="email">Email</th>
-            <th class="sort" data-sort="age">Age</th>
-          </tr>
-        </thead>
-        <tbody class="list">
-          <tr>
-            <td class="name">Anna</td>
-            <td class="email">anna@example.com</td>
-            <td class="age">18</td>
-          </tr>
-          <tr>
-            <td class="name">Homer</td>
-            <td class="email">homer@example.com</td>
-            <td class="age">35</td>
-          </tr>
-          <tr>
-            <td class="name">Oscar</td>
-            <td class="email">oscar@example.com</td>
-            <td class="age">52</td>
-          </tr>
-          <tr>
-            <td class="name">Emily</td>
-            <td class="email">emily@example.com</td>
-            <td class="age">30</td>
-          </tr>
-          <tr>
-            <td class="name">Jara</td>
-            <td class="email">jara@example.com</td>
-            <td class="age">25</td>
-          </tr>
-          <tr>
-            <td class="name">Clark</td>
-            <td class="email">clark@example.com</td>
-            <td class="age">39</td>
-          </tr>
-          <tr>
-            <td class="name">Jennifer</td>
-            <td class="email">jennifer@example.com</td>
-            <td class="age">52</td>
-          </tr>
-          <tr>
-            <td class="name">Tony</td>
-            <td class="email">tony@example.com</td>
-            <td class="age">30</td>
-          </tr>
-          <tr>
-            <td class="name">Tom</td>
-            <td class="email">tom@example.com</td>
-            <td class="age">25</td>
-          </tr>
-          <tr>
-            <td class="name">Michael</td>
-            <td class="email">michael@example.com</td>
-            <td class="age">39</td>
-          </tr>
-          <tr>
-            <td class="name">Antony</td>
-            <td class="email">antony@example.com</td>
-            <td class="age">39</td>
-          </tr>
-          <tr>
-            <td class="name">Raymond</td>
-            <td class="email">raymond@example.com</td>
-            <td class="age">52</td>
-          </tr>
-          <tr>
-            <td class="name">Marie</td>
-            <td class="email">marie@example.com</td>
-            <td class="age">30</td>
-          </tr>
-          <tr>
-            <td class="name">Cohen</td>
-            <td class="email">cohen@example.com</td>
-            <td class="age">25</td>
-          </tr>
-          <tr>
-            <td class="name">Rowen</td>
-            <td class="email">rowen@example.com</td>
-            <td class="age">39</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="card h-100" id="table"
+  data-list='{"valueNames":["libelle"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-auto col-sm-6 col-lg-7">
+        <h6 class="mb-0 text-nowrap py-2 py-xl-0 fs-2 text-primary">Rôles
 
+          <span class="fas fa-plus fs--1 text-600 " type="button" data-bs-toggle="modal"
+            data-bs-target="#addRoleModal"></span></h6>
+
+        </h6>
       </div>
-      <div class="text-center d-none" id="pages-table-fallback">
-        <p class="fw-bold fs-1 mt-3">Aucun rôle ne  correspond à votre recherche</p>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="row align-items-center">
-        <div class="pagination d-none"></div>
-        <div class="col">
-          <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"></span></p>
+      <div class="col-auto col-sm-6 col-lg-5">
+        <div class="h-100">
+          <form>
+            <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search"
+                placeholder="Search for a page" aria-label="search" />
+              <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
+            </div>
+          </form>
         </div>
-        <div class="col-auto d-flex"><button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button><button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button></div>
       </div>
     </div>
   </div>
+  <div class="card-body px-0 py-0">
+    <div class="table-responsive scrollbar">
 
-  
+      <table class="table table-bordered table-striped fs--1 mb-0">
+        <thead class="bg-200 text-900">
+          <tr>
+            <th class="sort" data-sort="libelle">Libelle</th>
+
+            <th class="sort" data-sort="action">Action</th>
+          </tr>
+        </thead>
+        <tbody class="list">
+
+          {% for role in roles %}
+          <tr>
+            <td class="libelle">{{ role.libelle }}</td>
+
+            <td class="align-middle white-space-nowrap text-end position-relative">
+              <div class="dropdown font-sans-serif btn-reveal-trigger">
+                <button
+                  class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal-sm transition-none"
+                  type="button" id="crm-recent-leads-0" data-bs-toggle="dropdown" data-boundary="viewport"
+                  aria-haspopup="true" aria-expanded="false">
+                  <span class="fas fa-ellipsis-h fs--2"></span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="crm-recent-leads-0">
+                  <a class="dropdown-item" href="#!">Modifier</a>
+
+                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+    </div>
+    <div class="text-center d-none" id="pages-table-fallback">
+      <p class="fw-bold fs-1 mt-3">Aucun rôle ne correspond à votre recherche</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="row align-items-center">
+      <div class="pagination d-none"></div>
+      <div class="col">
+        <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"></span></p>
+      </div>
+      <div class="col-auto d-flex"><button class="btn btn-sm btn-primary" type="button"
+          data-list-pagination="prev"><span>Previous</span></button><button class="btn btn-sm btn-primary px-4 ms-2"
+          type="button" data-list-pagination="next"><span>Next</span></button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addRoleModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border">
+
+      <div class="modal-header px-card bg-light border-bottom-0">
+        <h5 class="modal-title">Creer un rôle</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-card">
+
+        <div class="mb-3">
+          <label class="fs-0" for="fnRoleLibelle">Libelle</label>
+          <input class="form-control" type="text" id="fnRoleLibelle" required="required" />
+        </div>
+
+        <div class="mb-3"><label class="fs-0" for="fnRoleRoles">Roles</label>
+        <select class="form-select js-choice"  multiple="multiple" size="1" id="fnRoleRoles" data-options='{"removeItemButton":true,"placeholder":true}'>
+          <option value=""></option>
+          {% for role in app_roles %}
+            <option value="{{ role }}">{{ role }} </option>
+          {% endfor %}
+         
+      
+        </select>
+          
+          </div>
+      </div>
+
+      <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+        <button class="btn btn-primary px-4" type="button">Save</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</div>
+</div>
 {% endblock %}
 {% block addjs %}
+
+<script>
+  $(function() {
+      let feRoleLibelle = $('#feRoleLibelle'), fnRoleRoles = $('#feRoleRoles'),
+
+      let feRoleRoleChoice = new Choices(document.getElementById('feRoleRole'), {
+        removeItemButton: true, placeholder: true, shouldSort: false, itemSelectText: '',
+    });
+
+    function createRole() {
+        let form = JSON.stringify({
+            intitule: $('#fnRoleLibelle').val(),
+            roles: $('#fnRoleRoles').val(),
+        })
+        requestPost('{{ path('app_admin_role_ctrl_create') }}', form, '.fnRole', '#btnCreateRole').then(() => {
+            iziToast.destroy();
+            iziToast.success({
+                title: 'Succès',
+                message: "Le role a été créé avec succès",
+                position: 'topRight',
+            });
+            Turbolinks.visit(window.location.toString());
+        });
+    }
+    function updateRole() {
+        let form = JSON.stringify({
+            id: feRoleId.val(),
+            intitule: feRoleIntitule.val(),
+            roles: feRoleRole.val(),
+        })
+        requestPost('{{ path('app_admin_role_ctrl_update') }}', form, '.feRole', '#btnUpdateRole').then(() => {
+            iziToast.destroy();
+            iziToast.success({
+                title: 'Succès',
+                message: "Le role a été créé avec succès",
+                position: 'topRight',
+            });
+            Turbolinks.visit(window.location.toString());
+        });
+    }
+
+    btnCreateRole.on('click', function (){
+        createRole();
+    });
+    btnUpdateRole.on('click', function (){
+        updateRole();
+    });
+    $('.btnEditRow').on('click', function (){
+        let dataRowId = $(this).data('row-id');
+        requestGet('{{ path('app_admin_role_ctrl_find') }}?code=' + dataRowId).then((data) => {
+            feRoleId.val(data.id);
+            feRoleIntitule.val(data.intitule);
+            feRoleRoleChoice.removeActiveItems();
+            feRoleRoleChoice.setChoiceByValue(data.roles);
+            $('#editRoleModal').modal('show');
+        });
+    });
+    $('.btnDeleteRow').on('click', function (){
+        let dataRowId = $(this).data('row-id');
+        let dataRowName = $(this).data('row-name');
+        Swal.fire({
+            title: "Supprimer la ligne ?", text: dataRowName,
+            icon: "question",
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Supprimer',
+            cancelButtonText: 'Fermer'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                requestGet('{{ path('app_admin_role_ctrl_delete') }}?code=' + dataRowId).then(() => {
+                    iziToast.destroy();
+                    iziToast.success({
+                        title: 'Succès',
+                        message: "Le role a été supprimé avec succès",
+                        position: 'topRight',
+                    });
+                    Turbolinks.visit(window.location.toString());
+                });
+            }
+        });
+    });
+  })
+</script>
 
 {% endblock %}

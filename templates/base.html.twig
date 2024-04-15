@@ -31,10 +31,11 @@
 		<!-- ===============================================-->
 		<!--    Stylesheets-->
 		<!-- ===============================================-->
-		<link href="../vendors/leaflet/leaflet.css" rel="stylesheet"> 
-		<link href="../vendors/fullcalendar/main.min.css" rel="stylesheet">
-		<link href="../vendors/leaflet.markercluster/MarkerCluster.css" rel="stylesheet">
-		<link href="../vendors/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet">
+		<link href="{{ asset('vendors/choices/choices.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset('vendors/leaflet/leaflet.css')}}" rel="stylesheet"> 
+		<link href="{{ asset('vendors/fullcalendar/main.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('vendors/leaflet.markercluster/MarkerCluster.css') }}" rel="stylesheet">
+		<link href=" {{ asset('vendors/leaflet.markercluster/MarkerCluster.Default.css') }} " rel="stylesheet">
 		<link rel="preconnect" href="https://fonts.gstatic.com/">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
 		<link href="../vendors/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet">
@@ -2876,11 +2877,15 @@ navbarTopCombo.remove(navbarTopCombo);
 							<footer class="footer">
 								<div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
 									<div class="col-12 col-sm-auto text-center">
-										<p class="mb-0 text-600">Thank you for creating with Falcon
+										<p class="mb-0 text-600">Merci pour votre collaboration avec nous ❤️ !
 											<span class="d-none d-sm-inline-block">|
 											</span><br class="d-sm-none"/>
 											2022 &copy;
-											<a href="https://themewagon.com/">Themewagon</a>
+											<a href="https://www.linkedin.com/in/jean-louis-boli-8017801a7/" target="_blank"> 
+          <span class="fab fa-linkedin fs--1 text-600 text-primary"></span></h6>
+											
+											Jean Louis BOLI
+											</a>
 										</p>
 									</div>
 									<div class="col-12 col-sm-auto text-center">
@@ -2905,24 +2910,31 @@ navbarTopCombo.remove(navbarTopCombo);
 
 <!-- ===============================================--><!--    JavaScripts--><!-- ===============================================-->
 
-{% block script  %}<script src="../vendors/popper/popper.min.js"> </script>
-<script src="../vendors/bootstrap/bootstrap.min.js"></script>
-<script src="../vendors/anchorjs/anchor.min.js"></script>
-<script src="../vendors/is/is.min.js"></script>
-<script src="../vendors/echarts/echarts.min.js"></script>
-<script src="../assets/data/world.js"></script>
-<script src="../vendors/chart/chart.min.js"></script>
-<script src="../vendors/dayjs/dayjs.min.js"></script>
-<script src="../vendors/fontawesome/all.min.js"></script>
-<script src="../vendors/lodash/lodash.min.js"></script>
+{% block script  %}
+<script src="{{ asset('vendors/popper/popper.min.js') }}"> </script>
+<script src="{{asset('vendors/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{asset('vendors/anchorjs/anchor.min.js') }}"></script>
+<script src="{{ asset('vendors/is/is.min.js')}}"></script>
+<script src="{{ asset('vendors/echarts/echarts.min.js')}}"></script>
+<script src="{{ asset('assets/data/world.js')}}"></script>
+<script src="{{asset('vendors/chart/chart.min.js') }}"></script>
+<script src="{{asset('vendors/dayjs/dayjs.min.js') }}"></script>
+<script src="{{ asset('vendors/fontawesome/all.min.js') }}"></script>
+<script src="{{ asset('vendors/lodash/lodash.min.js') }}"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-<script src="../vendors/fullcalendar/main.min.js"></script>
-<script src="../vendors/list.js/list.min.js"></script>
-<script src="../assets/js/theme.js"></script>
+<script src="{{ asset('vendors/fullcalendar/main.min.js') }}"></script>
+<script src="{{ asset('vendors/list.js/list.min.js') }}"></script>
+<script src=" {{ asset('assets/js/theme.js')}}"></script>
+<script src=" {{ asset('assets/js/app.js')}}"></script>
+<script src=" {{ asset('assets/js/sweetalert.min.js')}}"></script>
+<script src=" {{ asset('assets/js/jquery.min.js')}}"></script>
+<script src="{{ asset('vendors/choices/choices.min.js')}}"></script>
 
 {% endblock %}
 
 {% block addjs %}
 
-{% endblock %}</body><!-- Mirrored from prium.github.io/falcon/v3.7.0/dashboard/analytics.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 22 Jan 2022 06:00:14 GMT --></html>
+{% endblock %}
+</body>
 
+</html>

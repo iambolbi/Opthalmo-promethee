@@ -11,7 +11,10 @@ security:
                 property: username
     role_hierarchy:
         ROLE_USER: ROLE_APP
-        ROLE_MEDECIN: ROLE_USER
+        ROLE_SECRETAIRE: ROLE_USER
+        ROLE_MEDECIN: ROLE_SECRETAIRE
+        ROLE_ADMIN : ROLE_MEDECIN
+        ROLE_ROOT : ROLE_ADMIN
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

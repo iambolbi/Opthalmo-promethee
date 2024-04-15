@@ -31,18 +31,6 @@ class UsersController extends AbstractController
 
         $users = $this->loginRepository->findBy(['state'=>true]);
 
-        
-        // $user = new TLogin();
-        // $user->setUsername('adminit');
-
-        // $pass = 'adminit';
-        // $hashPassword = $passwordHasher->hashPassword($user,$pass);
-
-        // $user->setPassword($hashPassword);
-        
-        // $entityManager->persist($user);
-        // $entityManager->flush();
-
         return [
             'users'=> $users
         ];
