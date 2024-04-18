@@ -33,6 +33,14 @@ class TRole
         $this->tUserRoles = new ArrayCollection();
     }
 
+    public function toArray():array
+    {
+        return $this?[
+            'id'=> $this->id,
+            'libelle' => $this->libelle,
+        ]:[];
+    }
+
     public function getId(): ?int
     {
         return $this->id;

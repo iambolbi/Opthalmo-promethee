@@ -115,8 +115,8 @@
           </div>
       </div>
 
-      <div class="card-footer d-flex justify-content-end align-items-center bg-light">
-        <button class="btn btn-primary px-4" type="button">Save</button>
+      <div class="card-footer d-flex flex-column bg-light">
+        <button class="btn btn-primary px-4 " id="btnCreateRole" type="button">Enregistrer</button>
       </div>
 
     </div>
@@ -124,6 +124,47 @@
   </div>
 
 </div>
+
+
+<div class="modal fade" id="editRoleModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border">
+
+      <div class="modal-header px-card bg-light border-bottom-0">
+        <h5 class="modal-title">Modifier un rôle</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-card">
+
+        <div class="mb-3">
+          <label class="fs-0" for="feRoleLibelle">Libelle</label>
+          <input class="form-control" type="text" id="feRoleLibelle" required="required" />
+        </div>
+
+        <div class="mb-3"><label class="fs-0" for="feRoleRoles">Roles</label>
+        <select class="form-select js-choice"  multiple="multiple" size="1" id="feRoleRoles" data-options='{"removeItemButton":true,"placeholder":true}'>
+          <option value=""></option>
+          {% for role in app_roles %}
+            <option value="{{ role }}">{{ role }} </option>
+          {% endfor %}
+         
+      
+        </select>
+          
+          </div>
+      </div>
+
+      <div class="card-footer d-flex flex-column bg-light">
+        <button class="btn btn-primary px-4 " id="btnCreateRole" type="button">Enregistrer</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 </div>
 </div>
 {% endblock %}
@@ -131,18 +172,21 @@
 
 <script>
   $(function() {
-      let feRoleLibelle = $('#feRoleLibelle'), fnRoleRoles = $('#feRoleRoles'),
 
-      let feRoleRoleChoice = new Choices(document.getElementById('feRoleRole'), {
+   
+      let btnCreateRole = $('#btnCreateRole'), btnUpdateRole = $('#btnUpdateRole'),feRoleLibelle = $('#feRoleLibelle'), fnRoleRoles = $('#feRoleRoles'),
+       feRoleRoleChoice = new Choices(document.getElementById('feRoleRole'), {
         removeItemButton: true, placeholder: true, shouldSort: false, itemSelectText: '',
     });
+
+    
 
     function createRole() {
         let form = JSON.stringify({
             intitule: $('#fnRoleLibelle').val(),
             roles: $('#fnRoleRoles').val(),
         })
-        requestPost('{{ path('app_admin_role_ctrl_create') }}', form, '.fnRole', '#btnCreateRole').then(() => {
+        requestPost('{{ path('roles_ctrl_create') }}', form, '.fnRole', '#btnCreateRole').then(() => {
             iziToast.destroy();
             iziToast.success({
                 title: 'Succès',
@@ -158,18 +202,18 @@
             intitule: feRoleIntitule.val(),
             roles: feRoleRole.val(),
         })
-        requestPost('{{ path('app_admin_role_ctrl_update') }}', form, '.feRole', '#btnUpdateRole').then(() => {
+        requestPost('{{ path('roles_ctrl_update') }}', form, '.feRole', '#btnUpdateRole').then(() => {
             iziToast.destroy();
             iziToast.success({
                 title: 'Succès',
-                message: "Le role a été créé avec succès",
+                message: "Le role a été modifié avec succès",
                 position: 'topRight',
             });
             Turbolinks.visit(window.location.toString());
         });
     }
-
     btnCreateRole.on('click', function (){
+      console.log('sdvdf')
         createRole();
     });
     btnUpdateRole.on('click', function (){
@@ -177,7 +221,7 @@
     });
     $('.btnEditRow').on('click', function (){
         let dataRowId = $(this).data('row-id');
-        requestGet('{{ path('app_admin_role_ctrl_find') }}?code=' + dataRowId).then((data) => {
+        requestGet('{{ path('roles_ctrl_find') }}?code=' + dataRowId).then((data) => {
             feRoleId.val(data.id);
             feRoleIntitule.val(data.intitule);
             feRoleRoleChoice.removeActiveItems();
@@ -198,7 +242,7 @@
             cancelButtonText: 'Fermer'
         }).then((result) => {
             if (result.isConfirmed) {
-                requestGet('{{ path('app_admin_role_ctrl_delete') }}?code=' + dataRowId).then(() => {
+                requestGet('{{ path('roles_ctrl_delete') }}?code=' + dataRowId).then(() => {
                     iziToast.destroy();
                     iziToast.success({
                         title: 'Succès',
@@ -210,6 +254,8 @@
             }
         });
     });
+
+
   })
 </script>
 

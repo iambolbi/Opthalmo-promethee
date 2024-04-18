@@ -43,11 +43,15 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: TRendezVous::class, mappedBy: 'fk_login')]
     private Collection $tRendezVouses;
 
+    #[ORM\OneToMany(targetEntity: TLog::class, mappedBy: 'fk_login')]
+    private Collection $tLogs;
+
     public function __construct()
     {
         
         $this->tUserRoles = new ArrayCollection();
         $this->tRendezVouses = new ArrayCollection();
+        $this->tLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,6 +183,36 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($tRendezVouse->getFkLogin() === $this) {
                 $tRendezVouse->setFkLogin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TLog>
+     */
+    public function getTLogs(): Collection
+    {
+        return $this->tLogs;
+    }
+
+    public function addTLog(TLog $tLog): static
+    {
+        if (!$this->tLogs->contains($tLog)) {
+            $this->tLogs->add($tLog);
+            $tLog->setFkLogin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTLog(TLog $tLog): static
+    {
+        if ($this->tLogs->removeElement($tLog)) {
+            // set the owning side to null (unless already changed)
+            if ($tLog->getFkLogin() === $this) {
+                $tLog->setFkLogin(null);
             }
         }
 
