@@ -23,5 +23,12 @@ class ErrorHttp
     ];
 
 
+    public const MSG_ROLE_NOT_FOUND =[
+        "error" => "role ". self::MSG_NOT_FOUND,
+        "title" => "Le rôle est introuvable",
+        "message" => "Impossible d'afficher cette page ",
+        "code" => 500
+    ];
+    
 
 }

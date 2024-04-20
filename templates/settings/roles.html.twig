@@ -5,7 +5,7 @@
 {% block base_content %}
 
 <div class="card h-100" id="table"
-  data-list='{"valueNames":["libelle"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
+  data-list='{"valueNames":["libelle","roles"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-auto col-sm-6 col-lg-7">
@@ -35,6 +35,7 @@
         <thead class="bg-200 text-900">
           <tr>
             <th class="sort" data-sort="libelle">Libelle</th>
+            <th class="sort" data-sort="roles">Roles</th>
 
             <th class="sort" data-sort="action">Action</th>
           </tr>
@@ -44,22 +45,24 @@
           {% for role in roles %}
           <tr>
             <td class="libelle">{{ role.libelle }}</td>
+            <td class="roles">
+            {% for role in role.roles %}
+                <span class="badge badge-soft-primary me-1"> {{role }}</span>
+            {% endfor %}
+            </td>
+            <td class="text-end">
+              <div>
 
-            <td class="align-middle white-space-nowrap text-end position-relative">
-              <div class="dropdown font-sans-serif btn-reveal-trigger">
-                <button
-                  class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal-sm transition-none"
-                  type="button" id="crm-recent-leads-0" data-bs-toggle="dropdown" data-boundary="viewport"
-                  aria-haspopup="true" aria-expanded="false">
-                  <span class="fas fa-ellipsis-h fs--2"></span>
+                <button class="btn p-0 btnEditRow" data-row-id="{{ role.id }}" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
+                  <span
+                    class="text-500 fas fa-edit"></span>
                 </button>
-                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="crm-recent-leads-0">
-                  <a class="dropdown-item" href="#!">Modifier</a>
 
-                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                <button class="btn p-0 ms-2 btnDeleteRow" data-row-id="{{ role.id }}" data-row-name="{{role.libelle }}" type="button" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Supprimer"><span class="text-500 fas fa-trash-alt"></span>
+                </button>
+              
                 </div>
-              </div>
-
             </td>
           </tr>
 
@@ -137,6 +140,8 @@
 
       <div class="modal-body p-card">
 
+      <input class="form-control" type="text" id="feRoleId" required="required" hidden/>
+
         <div class="mb-3">
           <label class="fs-0" for="feRoleLibelle">Libelle</label>
           <input class="form-control" type="text" id="feRoleLibelle" required="required" />
@@ -171,11 +176,13 @@
 {% block addjs %}
 
 <script>
+
   $(function() {
 
    
-      let btnCreateRole = $('#btnCreateRole'), btnUpdateRole = $('#btnUpdateRole'),feRoleLibelle = $('#feRoleLibelle'), fnRoleRoles = $('#feRoleRoles'),
-       feRoleRoleChoice = new Choices(document.getElementById('feRoleRole'), {
+      let btnCreateRole = $('#btnCreateRole'), btnUpdateRole = $('#btnUpdateRole'),feRoleId = $('#feRoleId'),feRoleLibelle = $('#feRoleLibelle'), feRoleRoles = $('#feRoleRoles'),
+       
+      feRoleRoleChoice = new Choices(document.getElementById('feRoleRoles'), {
         removeItemButton: true, placeholder: true, shouldSort: false, itemSelectText: '',
     });
 
@@ -199,8 +206,8 @@
     function updateRole() {
         let form = JSON.stringify({
             id: feRoleId.val(),
-            intitule: feRoleIntitule.val(),
-            roles: feRoleRole.val(),
+            intitule: feRoleLibelle.val(),
+            roles: feRoleRoles.val(),
         })
         requestPost('{{ path('roles_ctrl_update') }}', form, '.feRole', '#btnUpdateRole').then(() => {
             iziToast.destroy();
@@ -213,7 +220,7 @@
         });
     }
     btnCreateRole.on('click', function (){
-      console.log('sdvdf')
+      
         createRole();
     });
     btnUpdateRole.on('click', function (){
@@ -222,8 +229,9 @@
     $('.btnEditRow').on('click', function (){
         let dataRowId = $(this).data('row-id');
         requestGet('{{ path('roles_ctrl_find') }}?code=' + dataRowId).then((data) => {
+          console.log("role",data.roles )
             feRoleId.val(data.id);
-            feRoleIntitule.val(data.intitule);
+            feRoleLibelle.val(data.libelle);
             feRoleRoleChoice.removeActiveItems();
             feRoleRoleChoice.setChoiceByValue(data.roles);
             $('#editRoleModal').modal('show');

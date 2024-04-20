@@ -13,7 +13,7 @@ class PublicController extends AbstractController
     
     public function getUrl(): string
     {
-        return $this->isGranted('ROLE_USER')? $this->generateUrl('recipes_ctrl_index'):($this->isGranted('ROLE_MEDECIN')?$this->generateUrl('dashboard_ctrl_index'):$this->generateUrl('auth_ctrl_login'));
+        return $this->isGranted('ROLE_USER')? $this->generateUrl('recipes_ctrl_recipes'):($this->isGranted('ROLE_MEDECIN')?$this->generateUrl('dashboard_ctrl_dashboard'):$this->generateUrl('auth_ctrl_login'));
     }
 
 

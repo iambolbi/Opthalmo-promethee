@@ -38,6 +38,7 @@ class TRole
         return $this?[
             'id'=> $this->id,
             'libelle' => $this->libelle,
+            'roles' => $this->roles,
         ]:[];
     }
 

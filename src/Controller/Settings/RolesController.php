@@ -13,6 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -69,15 +70,19 @@ class RolesController extends AbstractController
     public function updaterole(): JsonResponse
     {
         $data = $this->functions->jsondecode();
-        if (!isset($data->intitule, $data->roles))
+
+        if (!isset($data->id, $data->intitule, $data->roles))
             return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
+
+        $role = $this->roleRepository->findOneBy(['id' => $data->id, 'state' => true]);
+        if (!$role) return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
         $app_roles = [];
         foreach ($data->roles as $roleItem) {
             if (in_array($roleItem, Vars::ROLES))
                 $app_roles[] = $roleItem;
         }
-        $role = (new TRole())->setLibelle($data->intitule)
+        $role->setLibelle($data->intitule)
             ->setRoles($app_roles);
 
         $this->functions->em()->persist($role);
@@ -90,43 +95,29 @@ class RolesController extends AbstractController
 
 
     #[Route('/find', name: 'find')]
-    public function findrole(): JsonResponse
+    public function findrole(Request $request): JsonResponse
     {
-        $data = $this->functions->jsondecode();
-        if (!isset($data->intitule, $data->roles))
-            return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
+        $id = $request->query->get('code');
 
-        $app_roles = [];
-        foreach ($data->roles as $roleItem) {
-            if (in_array($roleItem, Vars::ROLES))
-                $app_roles[] = $roleItem;
-        }
-        $role = (new TRole())->setLibelle($data->intitule)
-            ->setRoles($app_roles);
-
-        $this->functions->em()->persist($role);
-        $this->functions->em()->flush();
+        $role = $this->roleRepository->findOneBy(['id' => $id, 'state' =>  true]);
+        if (!$id || !$role)
+            return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
-        return $this->functions->success();
+        return $this->functions->success($role->toArray());
     }
 
 
     #[Route('/delete', name: 'delete')]
-    public function deleterole(): JsonResponse
+    public function deleterole(Request $request): JsonResponse
     {
-        $data = $this->functions->jsondecode();
-        if (!isset($data->intitule, $data->roles))
-            return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
+        $id = $request->query->get('code');
 
-        $app_roles = [];
-        foreach ($data->roles as $roleItem) {
-            if (in_array($roleItem, Vars::ROLES))
-                $app_roles[] = $roleItem;
-        }
-        $role = (new TRole())->setLibelle($data->intitule)
-            ->setRoles($app_roles);
+        $role = $this->roleRepository->findOneBy(['id' => $id, 'state' =>  true]);
+        if (!$id || !$role)
+            return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
+        $role->setState(false);
         $this->functions->em()->persist($role);
         $this->functions->em()->flush();
 
