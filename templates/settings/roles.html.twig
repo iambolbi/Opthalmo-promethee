@@ -161,7 +161,7 @@
       </div>
 
       <div class="card-footer d-flex flex-column bg-light">
-        <button class="btn btn-primary px-4 " id="btnCreateRole" type="button">Enregistrer</button>
+        <button class="btn btn-primary px-4 " id="btnUpdateRole" type="button">Enregistrer</button>
       </div>
 
     </div>
@@ -184,7 +184,7 @@
        
       feRoleRoleChoice = new Choices(document.getElementById('feRoleRoles'), {
         removeItemButton: true, placeholder: true, shouldSort: false, itemSelectText: '',
-    });
+      });
 
     
 
@@ -195,12 +195,14 @@
         })
         requestPost('{{ path('roles_ctrl_create') }}', form, '.fnRole', '#btnCreateRole').then(() => {
             iziToast.destroy();
+          
             iziToast.success({
                 title: 'Succès',
                 message: "Le role a été créé avec succès",
                 position: 'topRight',
             });
-            Turbolinks.visit(window.location.toString());
+            location.reload();
+           // Turbolinks.visit(window.location.toString());
         });
     }
     function updateRole() {
@@ -216,7 +218,9 @@
                 message: "Le role a été modifié avec succès",
                 position: 'topRight',
             });
-            Turbolinks.visit(window.location.toString());
+            location.reload();
+
+           // Turbolinks.visit(window.location.toString());
         });
     }
     btnCreateRole.on('click', function (){
@@ -257,7 +261,9 @@
                         message: "Le role a été supprimé avec succès",
                         position: 'topRight',
                     });
-                    Turbolinks.visit(window.location.toString());
+            location.reload();
+
+                 //   Turbolinks.visit(window.location.toString());
                 });
             }
         });

@@ -49,6 +49,7 @@ class RolesController extends AbstractController
         if (!isset($data->intitule, $data->roles))
             return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
 
+       
         $app_roles = [];
         foreach ($data->roles as $roleItem) {
             if (in_array($roleItem, Vars::ROLES))

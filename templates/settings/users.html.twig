@@ -4,120 +4,288 @@
 
 {% block base_content %}
 
-      
-  <div class="card h-100" id="table" data-list='{"valueNames":["name","roles"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
-    <div class="card-header">
-      <div class="row flex-between-center">
-        <div class="col-auto col-sm-6 col-lg-7">
-          <h6 class="mb-0 text-nowrap py-2 py-xl-0 fs-2 text-primary">Utilisateurs 
-            <span class="fas fa-plus fs--1 text-600 " type="button" data-bs-toggle="modal" data-bs-target="#addUserModal"></span></h6>
-        </div>
-        <div class="col-auto col-sm-6 col-lg-5">
-          <div class="h-100">
-            <form>
-              <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search for a page" aria-label="search" />
-                <div class="input-group-text bg-transparent">
-                  <span class="fa fa-search fs--1 text-600"></span>
-                </div>
-              </div>
-            </form>
-          </div>
+<div class="card h-100" id="table"
+  data-list='{"valueNames":["libelle","roles"],"page":10,"pagination":true,"fallback":"pages-table-fallback"}'>
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-auto col-sm-6 col-lg-7">
+        <h6 class="mb-0 text-nowrap py-2 py-xl-0 fs-2 text-primary">Utilisateurs
+
+          <span class="fas fa-plus fs--1 text-600 " type="button" data-bs-toggle="modal"
+            data-bs-target="#addUserModal"></span></h6>
+
+        </h6>
+      </div>
+      <div class="col-auto col-sm-6 col-lg-5">
+        <div class="h-100">
+          <form>
+            <div class="input-group"><input class="form-control form-control-sm shadow-none search" type="search"
+                placeholder="Search for a page" aria-label="search" />
+              <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <div class="card-body px-0 py-0">
-      <div class="table-responsive scrollbar">
-        
+  </div>
+  <div class="card-body px-0 py-0">
+    <div class="table-responsive scrollbar">
+
       <table class="table table-bordered table-striped fs--1 mb-0">
         <thead class="bg-200 text-900">
           <tr>
-            <th class="sort" data-sort="name">Nom</th>
+            <th class="sort" data-sort="libelle">Username</th>
             <th class="sort" data-sort="roles">Roles</th>
-            <th class="action" data-sort="age">Actions</th>
+
+            <th class="sort" data-sort="action">Action</th>
           </tr>
         </thead>
         <tbody class="list">
 
-         {% for user in users %}
+          {% for user in users %}
           <tr>
-            <td class="name">{{ user.username }}</td>
-            
+            <td class="libelle">{{ user.username }}</td>
             <td class="roles">
-              {% for userRole in user.tUserRoles|filter(v => v.state is same as(true) and v.fkRole.state is same as(true)) %}
-                
-                <span class="badge badge-soft-warning">{{ userRole.fkRole.libelle }}</span>
+            {% for userRole in user.tUserRoles|filter(v => v.state is same as(true)) %}
+              {% if userRole.fkRole and userRole.fkRole.state is same as(true) %}
+                <span class="badge badge-soft-primary me-1"> {{userRole.fkRole.libelle }}</span>
+              {% endif %}
+            {% endfor %}
+            </td>
+            <td class="text-end">
+              <div>
 
-              {% endfor %}
-              
-              </td>   
-            <td class="align-middle white-space-nowrap text-end position-relative">
-              <div class="dropdown font-sans-serif btn-reveal-trigger">
-                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal-sm transition-none" type="button" id="crm-recent-leads-0" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                  <span class="fas fa-ellipsis-h fs--2"></span>
+                <button class="btn p-0 btnEditRow" data-row-id="{{ user.id }}" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
+                  <span
+                    class="text-500 fas fa-edit"></span>
                 </button>
-                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="crm-recent-leads-0">
-                  <a class="dropdown-item" href="#!">View</a>
-                  <a class="dropdown-item" href="#!">Export</a>
-                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                </div>
-              </div>
 
+                <button class="btn p-0 ms-2 btnDeleteRow" data-row-id="{{ user.id }}" data-row-name="{{user.username }}" type="button" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Supprimer"><span class="text-500 fas fa-trash-alt"></span>
+                </button>
+              
+                </div>
             </td>
           </tr>
 
-         {% endfor %}
-          
+          {% endfor %}
+
         </tbody>
       </table>
 
-      </div>
-      <div class="text-center d-none" id="pages-table-fallback">
-        <p class="fw-bold fs-1 mt-3">Aucun utilisateur correspond à votre recherche</p>
-      </div>
     </div>
-    <div class="card-footer">
-      <div class="row align-items-center">
-        <div class="pagination d-none"></div>
-        <div class="col">
-          <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"></span></p>
+    <div class="text-center d-none" id="pages-table-fallback">
+      <p class="fw-bold fs-1 mt-3">Aucun rôle ne correspond à votre recherche</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="row align-items-center">
+      <div class="pagination d-none"></div>
+      <div class="col">
+        <p class="mb-0 fs--1"><span class="d-none d-sm-inline-block me-2" data-list-info="data-list-info"></span></p>
+      </div>
+      <div class="col-auto d-flex"><button class="btn btn-sm btn-primary" type="button"
+          data-list-pagination="prev"><span>Previous</span></button><button class="btn btn-sm btn-primary px-4 ms-2"
+          type="button" data-list-pagination="next"><span>Next</span></button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addUserModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border">
+
+      <div class="modal-header px-card bg-light border-bottom-0">
+        <h5 class="modal-title">Creer un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-card">
+
+        <div class="mb-3">
+          <label class="fs-0" for="fnUserUsername">Username</label>
+          <input class="form-control" type="text" id="fnUserUsername" required="required" />
         </div>
-        <div class="col-auto d-flex"><button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Previous</span></button><button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Next</span></button></div>
+
+        <div class="mb-3">
+          <label class="fs-0" for="fnUserPassowrd">Mot de passe </label>
+          <input class="form-control" type="password" id="fnUserPassowrd" required="required" />
+        </div>
+
+        <div class="mb-3"><label class="fs-0" for="fnUserRole">Roles</label>
+        <select class="form-select js-choice"  multiple="multiple" size="1" id="fnUserRole" data-options='{"removeItemButton":true,"placeholder":true}'>
+          <option value=""></option>
+          {% for role in roles %}
+            <option value="{{ role.id }}">{{ role.libelle }} </option>
+          {% endfor %}
+         
+      
+        </select>
+          
+          </div>
       </div>
+
+      <div class="card-footer d-flex flex-column bg-light">
+        <button class="btn btn-primary px-4 " id="btnCreateUser" type="button">Enregistrer</button>
+      </div>
+
     </div>
+
   </div>
 
+</div>
 
-  <div class="modal fade" id="addUserModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content border">
-        <form id="addEventForm" autocomplete="off">
-          <div class="modal-header px-card bg-light border-bottom-0">
-            <h5 class="modal-title">Creer un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body p-card">
-            <div class="mb-3"><label class="fs-0" for="eventTitle">Title</label><input class="form-control" id="eventTitle" type="text" name="title" required="required" /></div>
-            <div class="mb-3"><label class="fs-0" for="eventStartDate">Start Date</label><input class="form-control datetimepicker" id="eventStartDate" type="text" required="required" name="startDate" placeholder="yyyy/mm/dd hh:mm" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' /></div>
-            <div class="mb-3"><label class="fs-0" for="eventEndDate">End Date</label><input class="form-control datetimepicker" id="eventEndDate" type="text" name="endDate" placeholder="yyyy/mm/dd hh:mm" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' /></div>
-            <div class="form-check"><input class="form-check-input" type="checkbox" id="eventAllDay" name="allDay" /><label class="form-check-label" for="eventAllDay">All Day</label></div>
-            <div class="mb-3"> <label class="fs-0">Schedule Meeting</label>
-              <div><a class="btn badge-soft-success btn-sm" href="#!"><span class="fas fa-video me-2"></span>Add video conference link</a></div>
-            </div>
-            <div class="mb-3"><label class="fs-0" for="eventDescription">Description</label><textarea class="form-control" rows="3" name="description" id="eventDescription"></textarea></div>
-            <div class="mb-3"><label class="fs-0" for="eventLabel">Label</label><select class="form-select" id="eventLabel" name="label">
-                <option value="" selected="selected">None</option>
-                <option value="primary">Business</option>
-                <option value="danger">Important</option>
-                <option value="success">Personal</option>
-                <option value="warning">Must Attend</option>
-              </select></div>
-          </div>
-          <div class="card-footer d-flex justify-content-end align-items-center bg-light"><a class="me-3 text-600" href="events/create-an-event.html">More options</a><button class="btn btn-primary px-4" type="submit">Save</button></div>
-        </form>
+
+<div class="modal fade" id="editUserModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border">
+
+      <div class="modal-header px-card bg-primary-soft border-bottom-0">
+        <h5 class="modal-title">Modifier un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
+          aria-label="Close"></button>
       </div>
+
+      <div class="modal-body p-card">
+
+      <input class="form-control" type="text" id="feUserId" required="required" hidden/>
+
+        <div class="mb-3">
+          <label class="fs-0" for="feUserUsername">Username</label>
+          <input class="form-control" type="text" id="feUserUsername" required="required" />
+        </div>
+
+        <div class="mb-3">
+          <label class="fs-0" for="feUserPassowrd">Mot de passe </label>
+          <input class="form-control" type="password" id="feUserPassowrd" required="required" />
+        </div>
+
+        <div class="mb-3"><label class="fs-0" for="feUserRole">Roles</label>
+        <select class="form-select js-choice"  multiple="multiple" size="1" id="feUserRole" data-options='{"removeItemButton":true,"placeholder":true}'>
+          <option value=""></option>
+          {% for role in roles %}
+            <option value="{{ role.id }}">{{ role.libelle }} </option>
+          {% endfor %}
+         
+      
+        </select>
+          
+          </div>
+      </div>
+
+      <div class="card-footer d-flex flex-column bg-light">
+        <button class="btn btn-primary px-4 " id="btnUpdateUser" type="button">Enregistrer</button>
+      </div>
+
     </div>
+
   </div>
 
+</div>
+
+</div>
+</div>
 {% endblock %}
 {% block addjs %}
+
+<script>
+
+  $(function() {
+
+   
+      let btnCreateUser = $('#btnCreateUser'), btnUpdateUser = $('#btnUpdateUser'),feUserId = $('#feUserId'),feUserUsername = $('#feUserUsername'), feUserRole = $('#feUserRole'),
+       
+      feUserRoleChoice = new Choices(document.getElementById('feUserRole'), {
+        removeItemButton: true, placeholder: true, shouldSort: false, itemSelectText: '',
+      });
+
+    
+
+    function createUser() {
+        let form = JSON.stringify({
+            username: $('#fnUserUsername').val(),
+            password: $('#fnUserPassword').val(),
+            role: $('#fnUserRole').val(),
+        })
+
+        console.log("form", form)
+       /** requestPost('{{ path('users_ctrl_create') }}', form, '.fnUser', '#btnCreateUser').then(() => {
+            iziToast.destroy();
+          
+            iziToast.success({
+                title: 'Succès',
+                message: "L'utilisateur a été créé avec succès",
+                position: 'topRight',
+            });
+            location.reload();
+           
+        }); **/
+    }
+    function updateUser() {
+        let form = JSON.stringify({
+            id: feUserId.val(),
+            username: feUserUsername.val(),
+            role: feUserRole.val(),
+        })
+        requestPost('{{ path('roles_ctrl_update') }}', form, '.feUser', '#btnUpdateUser').then(() => {
+            iziToast.destroy();
+            iziToast.success({
+                title: 'Succès',
+                message: "Le role a été modifié avec succès",
+                position: 'topRight',
+            });
+            location.reload();
+
+           // Turbolinks.visit(window.location.toString());
+        });
+    }
+    btnCreateUser.on('click', function (){
+      
+        createUser();
+    });
+    btnUpdateUser.on('click', function (){
+        updateUser();
+    });
+    $('.btnEditRow').on('click', function (){
+        let dataRowId = $(this).data('row-id');
+        requestGet('{{ path('roles_ctrl_find') }}?code=' + dataRowId).then((data) => {
+          console.log("role",data.roles )
+            feUserId.val(data.id);
+            feUserUsername.val(data.libelle);
+            feUserRoleChoice.removeActiveItems();
+            feUserRoleChoice.setChoiceByValue(data.roles);
+            $('#editUserModal').modal('show');
+        });
+    });
+    $('.btnDeleteRow').on('click', function (){
+        let dataRowId = $(this).data('row-id');
+        let dataRowName = $(this).data('row-name');
+        Swal.fire({
+            title: "Supprimer la ligne ?", text: dataRowName,
+            icon: "question",
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Supprimer',
+            cancelButtonText: 'Fermer'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                requestGet('{{ path('roles_ctrl_delete') }}?code=' + dataRowId).then(() => {
+                    iziToast.destroy();
+                    iziToast.success({
+                        title: 'Succès',
+                        message: "Le role a été supprimé avec succès",
+                        position: 'topRight',
+                    });
+            location.reload();
+
+                 //   Turbolinks.visit(window.location.toString());
+                });
+            }
+        });
+    });
+
+
+  })
+</script>
 
 {% endblock %}
