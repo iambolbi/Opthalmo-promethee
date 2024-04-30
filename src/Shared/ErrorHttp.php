@@ -46,4 +46,19 @@ class ErrorHttp
     ];
     
 
+    public const MSG_ASSURANCE_NOT_FOUND =[
+        "error" => "assurance ". self::MSG_NOT_FOUND,
+        "title" => "L'assurance  est introuvable",
+        "message" => "Impossible d'afficher cette page ",
+        "code" => 500
+    ];
+
+
+    public const MSG_PRESTATION_NOT_FOUND =[
+        "error" => "prestation ". self::MSG_NOT_FOUND,
+        "title" => "La prestation  est introuvable",
+        "message" => "Impossible d'afficher cette page ",
+        "code" => 500
+    ];
+
 }

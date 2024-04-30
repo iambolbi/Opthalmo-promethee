@@ -85,7 +85,7 @@ class DoctorsController extends AbstractController
 
 
     #[Route('/find', name: 'find')]
-    public function findrole(Request $request): JsonResponse
+    public function finddoctor(Request $request): JsonResponse
     {
         $id = $request->query->get('code');
 
@@ -99,12 +99,12 @@ class DoctorsController extends AbstractController
 
 
     #[Route('/delete', name: 'delete')]
-    public function deleterole(Request $request): JsonResponse
+    public function deletedoctor(Request $request): JsonResponse
     {
         $id = $request->query->get('code');
 
         $medecin = $this->medecinRepository->findOneBy(['id' => $id, 'state' =>  true]);
-        
+
         if (!$id || !$medecin)
             return $this->functions->error(ErrorHttp::MSG_MEDECIN_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 

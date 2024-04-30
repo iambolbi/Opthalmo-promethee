@@ -33,6 +33,15 @@ class TPrestation
         $this->tRendezPrestations = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+        return $this?[
+            'id'=> $this->id,
+            'libelle' => $this->libelle,
+            'valeur' => $this->valeur
+        ]:null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
