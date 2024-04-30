@@ -3,6 +3,8 @@
 namespace App\Shared;
 
 use App\Entity\TLog;
+use App\Entity\TLogin;
+use App\Repository\TLoginRepository;
 use Doctrine\ORM\Query\Expr\Func;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -14,11 +16,12 @@ class Functions
 
 
     private ManagerRegistry $managerRegistry;
+    private TLoginRepository $loginRepository;
 
-
-    public function __construct(ManagerRegistry $managerRegistry)
+    public function __construct(ManagerRegistry $managerRegistry,  TLoginRepository $loginRepository)
     {
         $this->managerRegistry = $managerRegistry;
+        $this->loginRepository = $loginRepository;
     }
 
 
@@ -73,6 +76,11 @@ class Functions
         ->setMessage($param['message']??null)
         ->setFkLogin($param['fk_login']??null)
         ;
+    }
+
+    public function getUser($id) : TLogin
+    {
+        return $this->loginRepository->findOneBy(['id'=>$id,'state'=>true]);
     }
 
 }

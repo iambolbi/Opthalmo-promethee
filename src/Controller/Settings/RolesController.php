@@ -94,7 +94,6 @@ class RolesController extends AbstractController
     }
 
 
-
     #[Route('/find', name: 'find')]
     public function findrole(Request $request): JsonResponse
     {

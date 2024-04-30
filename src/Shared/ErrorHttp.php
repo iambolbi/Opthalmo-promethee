@@ -29,6 +29,21 @@ class ErrorHttp
         "message" => "Impossible d'afficher cette page ",
         "code" => 500
     ];
+
+
+    public const MSG_MEDECIN_NOT_FOUND =[
+        "error" => "doctor ". self::MSG_NOT_FOUND,
+        "title" => "Le medecin est introuvable",
+        "message" => "Impossible d'afficher cette page ",
+        "code" => 500
+    ];
+
+    public const MSG_USER_NOT_FOUND =[
+        "error" => "utilisateur ". self::MSG_NOT_FOUND,
+        "title" => "L'utillisateur  est introuvable",
+        "message" => "Impossible d'afficher cette page ",
+        "code" => 500
+    ];
     
 
 }

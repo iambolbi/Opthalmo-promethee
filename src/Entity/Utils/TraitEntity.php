@@ -29,11 +29,6 @@ trait TraitEntity
     private ?\DateTimeInterface $date_delete = null;
 
 
-    public function __construct()
-    {
-        if($this->date === null) $this->date = new DateTime();
-    }
-
     public function getState(): ?bool
     {
         return $this->state;

@@ -27,7 +27,9 @@ security:
                 login_path: auth_ctrl_login
                 check_path: auth_ctrl_login
                 default_target_path: dashboard_ctrl_dashboard
-
+            logout:
+                path: auth_ctrl_logout
+                target: auth_ctrl_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

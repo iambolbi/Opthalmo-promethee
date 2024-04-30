@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TUserRoleRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -23,6 +24,21 @@ class TUserRole
 
     #[ORM\ManyToOne(inversedBy: 'tUserRoles')]
     private ?TRole $fk_role = null;
+
+    public function __construct()
+    {
+        if($this->date === null) $this->date = new DateTime();
+       
+    }
+
+    public function toArray() : ?array
+    {
+        return $this? [
+            'id' => $this->id,
+            'fk_user' => $this->fk_login? $this->fk_login->toArray():null,
+            'fk_role' => $this->fk_role? $this->fk_role->toArray():null
+        ]:null;
+    }
 
     public function getId(): ?int
     {

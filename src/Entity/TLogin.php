@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TLoginRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,17 +42,32 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $tUserRoles;
 
     #[ORM\OneToMany(targetEntity: TRendezVous::class, mappedBy: 'fk_login')]
-    private Collection $tRendezVouses;
+    private Collection $tRendezVous;
 
     #[ORM\OneToMany(targetEntity: TLog::class, mappedBy: 'fk_login')]
     private Collection $tLogs;
 
     public function __construct()
     {
-        
+        if($this->date === null) $this->date = new DateTime();
+
         $this->tUserRoles = new ArrayCollection();
-        $this->tRendezVouses = new ArrayCollection();
+        $this->tRendezVous = new ArrayCollection();
         $this->tLogs = new ArrayCollection();
+    }
+
+
+    public function toArray(): ?array
+    {
+        return $this? [
+            'id'=> $this->id,
+            'username' => $this->username,
+            // 'tUserRoles' =>  array_map(function (TUserRole $userRole) {
+            //     return $userRole->toArray();
+            // }, array_filter($this->getTUserRoles()->getValues(), function (TUserRole $userRole) {
+            //     return $userRole->getState() === true && $userRole->getFkRole() && $userRole->getFkRole()->getState() === true;
+            // })), 
+        ]:null;
     }
 
     public function getId(): ?int
@@ -81,16 +97,19 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->username;
     }
 
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
+   
     public function getRoles(): array
     {
         $roles = $this->roles;
+       // $userRoles = $this->tUserRoles->getValues();
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+        // foreach($userRoles as $role)
+        // {
+        //     if($role->getState() && $role->getFkLogin() && $role->getFkLogin()->getState()){
+        //         $roles = array_merge($roles, $role->getFkLogin()->getRoles());
+        //     }
+        // }
 
         return array_unique($roles);
     }
@@ -162,27 +181,27 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, TRendezVous>
      */
-    public function getTRendezVouses(): Collection
+    public function getTRendezVous(): Collection
     {
-        return $this->tRendezVouses;
+        return $this->tRendezVous;
     }
 
-    public function addTRendezVouse(TRendezVous $tRendezVouse): static
+    public function addTRendezVous(TRendezVous $tRendezVous): static
     {
-        if (!$this->tRendezVouses->contains($tRendezVouse)) {
-            $this->tRendezVouses->add($tRendezVouse);
-            $tRendezVouse->setFkLogin($this);
+        if (!$this->tRendezVous->contains($tRendezVous)) {
+            $this->tRendezVous->add($tRendezVous);
+            $tRendezVous->setFkLogin($this);
         }
 
         return $this;
     }
 
-    public function removeTRendezVouse(TRendezVous $tRendezVouse): static
+    public function removeTRendezVouse(TRendezVous $tRendezVous): static
     {
-        if ($this->tRendezVouses->removeElement($tRendezVouse)) {
+        if ($this->tRendezVous->removeElement($tRendezVous)) {
             // set the owning side to null (unless already changed)
-            if ($tRendezVouse->getFkLogin() === $this) {
-                $tRendezVouse->setFkLogin(null);
+            if ($tRendezVous->getFkLogin() === $this) {
+                $tRendezVous->setFkLogin(null);
             }
         }
 

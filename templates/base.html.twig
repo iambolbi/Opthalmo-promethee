@@ -25,9 +25,9 @@
 		<link rel="manifest" href="../assets/img/favicons/manifest.json">
 		<meta name="msapplication-TileImage" content="../assets/img/favicons/mstile-150x150.png">
 		<meta name="theme-color" content="#ffffff">
-		<meta name="turbolinks-cache-control" content="no-cache">
+		
 		<script src="../assets/js/config.js"></script>
-		<script src="{{ asset('assets/js/turbolinks.min.js') }}" ></script>
+	
 		<script src="../vendors/overlayscrollbars/OverlayScrollbars.min.js"></script>
 
 		<!-- ===============================================-->
@@ -145,6 +145,7 @@ userLinkRTL.setAttribute('disabled', true);
 											</a>
 										</li>
 
+								
 									<li class="nav-item">
 										<!-- label-->
 										<div class="row navbar-vertical-label-wrapper mt-3 mb-2">
@@ -198,7 +199,8 @@ userLinkRTL.setAttribute('disabled', true);
 											</div>
 										</a>
 
-									</li>
+									</li> 
+								
 									{# 
 									<li
 										class="nav-item">
@@ -1760,7 +1762,7 @@ userLinkRTL.setAttribute('disabled', true);
 								<span class="toggle-line"></span>
 							</span>
 						</button>
-						<a class="navbar-brand me-1 me-sm-3" href="../index.html">
+						{# <a class="navbar-brand me-1 me-sm-3" href="../index.html">
 							<div class="d-flex align-items-center"><img class="me-2" src="../assets/img/icons/spot-illustrations/falcon.png" alt="" width="40"/><span class="font-sans-serif">falcon</span>
 							</div>
 						</a>
@@ -2362,7 +2364,9 @@ userLinkRTL.setAttribute('disabled', true);
 									</div>
 								</div>
 							</li>
-						</ul>
+						</ul> #}
+
+
 					</nav>
 
 					<div class="content">
@@ -2495,8 +2499,9 @@ userLinkRTL.setAttribute('disabled', true);
 											</div>
 										</li>
 									</ul> #}
-								<ul
-									class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+								
+									<ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+
 									{# <li class="nav-item">
 											<div class="theme-control-toggle fa-icon-wait px-2"><input class="form-check-input ms-0 theme-control-toggle-input" id="themeControlToggle" type="checkbox" data-theme-control="theme" value="dark"/><label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Switch to light theme">
 														<span class="fas fa-sun fs-0"></span>
@@ -2755,7 +2760,8 @@ userLinkRTL.setAttribute('disabled', true);
 													</div>
 												</div>
 											</li> #}
-									<li class="nav-item dropdown">
+									
+											<li class="nav-item dropdown">
 										<a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<div class="avatar avatar-xl">
 												<img class="rounded-circle" src="../assets/img/team/3-thumb.png" alt=""/>
@@ -2773,8 +2779,8 @@ userLinkRTL.setAttribute('disabled', true);
 																																				<a class="dropdown-item" href="../pages/user/profile.html">Profile &amp; account</a>
 																																				<a class="dropdown-item" href="#!">Feedback</a>
 																																				<div class="dropdown-divider"></div> #}
-												<a class="dropdown-item" href="../pages/user/settings.html">Settings</a>
-												<a class="dropdown-item" href="../pages/authentication/card/logout.html">Logout</a>
+												<a class="dropdown-item" href="#">{{ app.user.username|upper }}</a>
+												<a class="dropdown-item" href="{{ path('auth_ctrl_logout') }}">Déconnexion</a>
 											</div>
 										</div>
 									</li>
@@ -2878,25 +2884,25 @@ navbarTopCombo.remove(navbarTopCombo);
 
 						{% block footer %}
 
-							<footer class="footer">
-								<div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
-									<div class="col-12 col-sm-auto text-center">
-										<p class="mb-0 text-600">Merci pour votre collaboration avec nous ❤️ !
-											<span class="d-none d-sm-inline-block">|
-											</span><br class="d-sm-none"/>
-											2022 &copy;
-											<a href="https://www.linkedin.com/in/jean-louis-boli-8017801a7/" target="_blank"> 
-          <span class="fab fa-linkedin fs--1 text-600 text-primary"></span></h6>
-											
-											Jean Louis BOLI
-											</a>
-										</p>
-									</div>
-									<div class="col-12 col-sm-auto text-center">
-										<p class="mb-0 text-600">v3.7.0</p>
-									</div>
-								</div>
-							</footer>
+						<footer class="footer">
+							<div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
+								<div class="col-12 col-sm-auto text-center">
+									<p class="mb-0 text-600">Merci pour votre collaboration avec nous ❤️ !
+										<span class="d-none d-sm-inline-block">|</span><br class="d-sm-none"/>2022 &copy;
+										<a href="https://www.linkedin.com/in/jean-louis-boli-8017801a7/" target="_blank">
+										<span class="fab fa-linkedin fs--1 text-600 text-primary"></span>
+										Jean Louis BOLI
+									</p>
+								</a>
+							</p>
+						</div>
+						<div class="col-12 col-sm-auto text-center">
+							<p class="mb-0 text-600">v3.7.0</p>
+						</div>
+						</div>
+						</footer> 
+
+
 						{% endblock  %}
 
 					</div>

@@ -41,6 +41,17 @@ class TMedecin
         $this->tRendezPrestations = new ArrayCollection();
     }
 
+    public function toArray(): array
+    {
+            return $this?[
+                'id' => $this->id,
+                'nom' => $this->nom,
+                'prenom' => $this->prenom,
+                'tel' => $this->contact,
+                'adresse' => $this->adresse
+            ]:null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

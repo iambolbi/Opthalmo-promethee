@@ -95,8 +95,8 @@
   <div class="modal-dialog">
     <div class="modal-content border">
 
-      <div class="modal-header px-card bg-light border-bottom-0">
-        <h5 class="modal-title">Creer un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
+      <div class="modal-header px-card bg-primary border-bottom-0">
+        <h5 class="modal-title text-white">Creer un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
 
@@ -108,8 +108,8 @@
         </div>
 
         <div class="mb-3">
-          <label class="fs-0" for="fnUserPassowrd">Mot de passe </label>
-          <input class="form-control" type="password" id="fnUserPassowrd" required="required" />
+          <label class="fs-0" for="fnUserPassword">Mot de passe </label>
+          <input class="form-control" type="password" id="fnUserPassword" required="required" />
         </div>
 
         <div class="mb-3"><label class="fs-0" for="fnUserRole">Roles</label>
@@ -150,7 +150,7 @@
       <input class="form-control" type="text" id="feUserId" required="required" hidden/>
 
         <div class="mb-3">
-          <label class="fs-0" for="feUserUsername">Username</label>
+          <label class="fs-0" for="feUserUsername">Nom d'utilisateur</label>
           <input class="form-control" type="text" id="feUserUsername" required="required" />
         </div>
 
@@ -173,7 +173,7 @@
       </div>
 
       <div class="card-footer d-flex flex-column bg-light">
-        <button class="btn btn-primary px-4 " id="btnUpdateUser" type="button">Enregistrer</button>
+        <button class="btn btn-primary px-4 " id="btnUpdateUser" type="button">Mise à jour</button>
       </div>
 
     </div>
@@ -182,8 +182,7 @@
 
 </div>
 
-</div>
-</div>
+
 {% endblock %}
 {% block addjs %}
 
@@ -203,12 +202,12 @@
     function createUser() {
         let form = JSON.stringify({
             username: $('#fnUserUsername').val(),
-            password: $('#fnUserPassword').val(),
+            password: $('#fnUserPassword').val(), 
             role: $('#fnUserRole').val(),
         })
 
         console.log("form", form)
-       /** requestPost('{{ path('users_ctrl_create') }}', form, '.fnUser', '#btnCreateUser').then(() => {
+        requestPost('{{ path('users_ctrl_create') }}', form, '.fnUser', '#btnCreateUser').then(() => {
             iziToast.destroy();
           
             iziToast.success({
@@ -218,7 +217,7 @@
             });
             location.reload();
            
-        }); **/
+        }); 
     }
     function updateUser() {
         let form = JSON.stringify({
@@ -247,10 +246,11 @@
     });
     $('.btnEditRow').on('click', function (){
         let dataRowId = $(this).data('row-id');
-        requestGet('{{ path('roles_ctrl_find') }}?code=' + dataRowId).then((data) => {
-          console.log("role",data.roles )
+        requestGet('{{ path('users_ctrl_find') }}?code=' + dataRowId).then((data) => {
+            
+            console.log("role",data )
             feUserId.val(data.id);
-            feUserUsername.val(data.libelle);
+            feUserUsername.val(data.username);
             feUserRoleChoice.removeActiveItems();
             feUserRoleChoice.setChoiceByValue(data.roles);
             $('#editUserModal').modal('show');

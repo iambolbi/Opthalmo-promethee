@@ -5,6 +5,7 @@ namespace App\Controller\Auth;
 use App\Entity\TLogin;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Exception;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 #[Route('auth', name: 'auth_ctrl_')]
 class AuthController extends AbstractController
 {
-    // private ObjectManager $manager;
-
-    // public function __construct(ObjectManager $manager)
-    // {
-    //     $this->manager = $manager;        
-    // }
-
+    
 
 
     #[Route('/login', name: 'login')]
@@ -49,4 +44,11 @@ class AuthController extends AbstractController
             'error'         => $error,
         ];
     }
+
+    #[Route('/logout', name: 'logout')]
+    public function logout(): void
+    {
+        throw new Exception('This should never be reached');
+    }
+
 }

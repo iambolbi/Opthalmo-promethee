@@ -27,10 +27,10 @@ class TRendezVous
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $soin = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tRendezVouses')]
+    #[ORM\ManyToOne(inversedBy: 'tRendezVous')]
     private ?TLogin $fk_login = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tRendezVouses')]
+    #[ORM\ManyToOne(inversedBy: 'tRendezVous')]
     private ?TPatient $fk_patient = null;
 
     #[ORM\OneToMany(targetEntity: TRendezPrestation::class, mappedBy: 'fk_rendez_vous')]
