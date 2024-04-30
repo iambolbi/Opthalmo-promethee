@@ -43,7 +43,7 @@
           {% for prestation in prestations %}
           <tr>
             <td class="libelle">{{ prestation.libelle }} </td>
-            <td class="valeur">{{ prestation.valeur }} </td>
+            <td class="valeur">{{ prestation.valeur|number_format  }} FCFA   <span class="fas fa-money-bill-alt text-success"></span></td>
         
             <td class="text-end">
               <div>
@@ -102,7 +102,7 @@
 
         <div class="mb-3">
           <label class="fs-0" for="fnServiceValeur">Valeur</label>
-          <input class="form-control fnService" type="text" id="fnServiceLibelle" required="required" />
+          <input class="form-control fnService" type="text" id="fnServiceValeur" required="required" />
         </div>
 
 
@@ -188,7 +188,7 @@
     }
     function updateService() {
         let form = JSON.stringify({
-            id: feUserId.val(),
+            id: feServiceId.val(),
             libelle: feServiceLibelle.val(),
             valeur: feServiceValeur.val(),
         })
