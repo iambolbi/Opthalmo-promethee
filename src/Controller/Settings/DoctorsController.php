@@ -16,8 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('doctors', name: 'doctors_ctrl_')]
+#[IsGranted('ROLE_ADMIN')]
 class DoctorsController extends AbstractController
 {
    
@@ -30,6 +32,7 @@ class DoctorsController extends AbstractController
         $this->functions = $functions;
     }
 
+    //    Affichage  des docteurs
     #[Route('', name: 'doctors')]
     #[Template('settings/doctors.html.twig')]
     public function medecins(): array
@@ -40,7 +43,7 @@ class DoctorsController extends AbstractController
         ];
     }
 
-
+    //   Creer un docteur
     #[Route('/create', name: 'create')]
     public function createdoctor(): JsonResponse
     {
@@ -62,7 +65,7 @@ class DoctorsController extends AbstractController
         return $this->functions->success();
     }
 
-
+    //    Modifier un docteur
     #[Route('/update', name: 'update')]
     public function updatedoctor(): JsonResponse
     {
@@ -83,7 +86,7 @@ class DoctorsController extends AbstractController
         return $this->functions->success();
     }
 
-
+    //    Afficher  un docteur
     #[Route('/find', name: 'find')]
     public function finddoctor(Request $request): JsonResponse
     {
@@ -98,6 +101,7 @@ class DoctorsController extends AbstractController
     }
 
 
+    //    Supprimer un docteur
     #[Route('/delete', name: 'delete')]
     public function deletedoctor(Request $request): JsonResponse
     {

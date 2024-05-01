@@ -16,8 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('services', name: 'services_ctrl_')]
+#[IsGranted('ROLE_ADMIN')]
 class ServicesController extends AbstractController
 {
     private  Functions $functions;
@@ -30,7 +32,7 @@ class ServicesController extends AbstractController
     }
 
 
-
+    //    Affichage  des prestations
     #[Route('', name: 'services')]
     #[Template('settings/services.html.twig')]
     public function services(): array
@@ -42,7 +44,7 @@ class ServicesController extends AbstractController
     }
 
 
-
+    //    Creer une prestation
     #[Route('/create', name: 'create')]
     public function createservice(): JsonResponse
     {
@@ -63,7 +65,7 @@ class ServicesController extends AbstractController
         return $this->functions->success();
     }
 
-
+    //    Mdifier une prestation
     #[Route('/update', name: 'update')]
     public function updateservice(): JsonResponse
     {
@@ -86,6 +88,7 @@ class ServicesController extends AbstractController
     }
 
 
+    //    Affichage  d'utilisateur
     #[Route('/find', name: 'find')]
     public function findservice(Request $request): JsonResponse
     {
@@ -99,7 +102,7 @@ class ServicesController extends AbstractController
         return $this->functions->success($prestation->toArray());
     }
 
-
+    //    Supprimer un utilsateur
     #[Route('/delete', name: 'delete')]
     public function deleteservice(Request $request): JsonResponse
     {

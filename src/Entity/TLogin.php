@@ -104,6 +104,7 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
        // $userRoles = $this->tUserRoles->getValues();
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ADMIN';
         // foreach($userRoles as $role)
         // {
         //     if($role->getState() && $role->getFkLogin() && $role->getFkLogin()->getState()){

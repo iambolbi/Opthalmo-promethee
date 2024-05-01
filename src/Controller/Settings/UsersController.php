@@ -6,6 +6,7 @@ use App\Entity\TLogin;
 use App\Entity\TUserRole;
 use App\Repository\TLoginRepository;
 use App\Repository\TRoleRepository;
+use App\Repository\TUserRoleRepository;
 use App\Shared\ErrorHttp;
 use App\Shared\Functions;
 use App\Shared\Vars;
@@ -18,23 +19,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('users', name: 'users_ctrl_')]
+#[IsGranted('ROLE_ADMIN')]
 class UsersController extends AbstractController
 {
     private TRoleRepository $roleRepository;
     private Functions $functions;
     private TLoginRepository $loginRepository;
+    private TUserRoleRepository $userRoleRepository;
    
 
-    public function __construct(TRoleRepository $roleRepository,TLoginRepository $loginRepository,   Functions $functions)
+    public function __construct(TUserRoleRepository $userRoleRepository, TRoleRepository $roleRepository,TLoginRepository $loginRepository,   Functions $functions)
     {
         $this->roleRepository = $roleRepository;
         $this->functions = $functions;
         $this->loginRepository = $loginRepository;
+        $this->userRoleRepository = $userRoleRepository;
       
     }
   
+//    Affichage  des utilisateurs
     #[Route('', name: 'users')]
     #[Template('settings/users.html.twig')]
     public function users(): array
@@ -45,33 +51,32 @@ class UsersController extends AbstractController
            'roles' => $this->roleRepository->findBy(['state'=>true])
         ];
     }
-
+//    Creer un utilisateur
     #[Route('/create', name: 'create')]
-    public function createuser(UserPasswordHasherInterface $passwordHasher): JsonResponse
+    public function createuser(): JsonResponse
     {
         $data = $this->functions->jsondecode();
-        if (!isset($data->username,$data->password,$data->role))
+        if (!isset($data->username,$data->password,$data->roles))
             return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
 
-        $role = $this->roleRepository->findOneBy(['id' => $data->role, 'state' => true]);
-        if (!$role) return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
-
-      
         $user = (new TLogin())->setUsername($data->username);
 
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $data->password
-        );
-        $user->setPassword($hashedPassword);
+        $user->setPassword($this->functions->hasher()->hashPassword($user,$data->password));
         $this->functions->em()->persist($user);
 
 
-        $userRole = (new TUserRole())->setFkLogin($user)
-                                    ->setFkRole($role);
-        $this->functions->em()->persist($userRole);
-
-
+        foreach($data->roles as $role)
+        {
+            $role = $this->roleRepository->findOneBy(['id' => $role, 'state' => true]);
+            // if (!$role) return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+            if($role)
+            {
+                $userRole = (new TUserRole())->setFkLogin($user)
+                ->setFkRole($role);
+                $this->functions->em()->persist($userRole);
+            }
+        }
+      
         $this->functions->em()->persist($user);
         $this->functions->em()->flush();
 
@@ -79,62 +84,80 @@ class UsersController extends AbstractController
         return $this->functions->success();
     }
 
-
+//    Modfiier un utilisateur 
     #[Route('/update', name: 'update')]
     public function updaterole(): JsonResponse
     {
+      
         $data = $this->functions->jsondecode();
-
-        if (!isset($data->id, $data->intitule, $data->roles))
+        if (!isset($data->id,$data->username,$data->password,$data->roles))
             return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
 
-        $role = $this->roleRepository->findOneBy(['id' => $data->id, 'state' => true]);
-        if (!$role) return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        $user = $this->loginRepository->findOneBy(['id'=>$data->id, 'state'=>true]);   
+        if (!$user) return $this->functions->error(ErrorHttp::MSG_USER_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-        $app_roles = [];
-        foreach ($data->roles as $roleItem) {
-            if (in_array($roleItem, Vars::ROLES))
-                $app_roles[] = $roleItem;
+        $user->setUsername($data->username);
+
+        if(strlen($data->password)>0)
+            $user->setPassword($this->functions->hasher()->hashPassword($user,$data->password));
+
+        $this->functions->em()->persist($user);
+
+        $userRoles = $this->userRoleRepository->findBy(['fk_login'=>$user->getId(),'state'=>true]);
+
+        foreach($userRoles  as $userRole)
+        {
+            $userRole->setState(false);
+            $this->functions->em()->persist($userRole);
         }
-        $role->setLibelle($data->intitule)
-            ->setRoles($app_roles);
 
-        $this->functions->em()->persist($role);
+        foreach($data->roles as $role)
+        {
+            $role = $this->roleRepository->findOneBy(['id' => $role, 'state' => true]);
+            // if (!$role) return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+            if($role)
+            {
+                $userRole = (new TUserRole())->setFkLogin($user)
+                ->setFkRole($role);
+                $this->functions->em()->persist($userRole);
+            }
+        }
+      
+        $this->functions->em()->persist($user);
         $this->functions->em()->flush();
+
 
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         return $this->functions->success();
     }
 
 
-
+//    Rechercher un utilisateur
     #[Route('/find', name: 'find')]
-    public function findrole(Request $request): JsonResponse
+    public function finduser(Request $request): JsonResponse
     {
         $id = $request->query->get('code');
-        
         
         $login = $this->loginRepository->findOneBy(['id' => $id, 'state' =>  true]);
         if (!$id || !$login)
             return $this->functions->error(ErrorHttp::MSG_USER_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-       // dd($login);
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         return $this->functions->success($login->toArray());
     }
 
-
+//    Supprimer un utilisateur
     #[Route('/delete', name: 'delete')]
-    public function deleterole(Request $request): JsonResponse
+    public function deleteuser(Request $request): JsonResponse
     {
         $id = $request->query->get('code');
 
-        $role = $this->roleRepository->findOneBy(['id' => $id, 'state' =>  true]);
-        if (!$id || !$role)
-            return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        $user = $this->loginRepository->findOneBy(['id' => $id, 'state' =>  true]);
+        if (!$id || !$user)
+            return $this->functions->error(ErrorHttp::MSG_USER_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-        $role->setState(false);
-        $this->functions->em()->persist($role);
+        $user->setState(false);
+        $this->functions->em()->persist($user);
         $this->functions->em()->flush();
 
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);

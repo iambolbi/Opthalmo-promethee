@@ -47,16 +47,13 @@
         
             <td class="text-end">
               <div>
-
                 <button class="btn p-0 btnEditRow" data-row-id="{{ prestation.id }}" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier">
                   <span
                     class="text-500 fas fa-edit"></span>
                 </button>
-
                 <button class="btn p-0 ms-2 btnDeleteRow" data-row-id="{{ prestation.id }}" data-row-name="{{ prestation.libelle }}" type="button" data-bs-toggle="tooltip"
                   data-bs-placement="top" title="Supprimer"><span class="text-500 fas fa-trash-alt"></span>
                 </button>
-              
                 </div>
             </td>
           </tr>
@@ -162,9 +159,7 @@
 
   $(function() {
 
-   
-      let btnCreateService = $('#btnCreateService'), btnUpdateService = $('#btnUpdateService'),feServiceId = $('#feServiceId'),feServiceLibelle = $('#feServiceLibelle'),feServiceValeur = $('#feServiceValeur')
-       
+    let btnCreateService = $('#btnCreateService'), btnUpdateService = $('#btnUpdateService'),feServiceId = $('#feServiceId'),feServiceLibelle = $('#feServiceLibelle'),feServiceValeur = $('#feServiceValeur')
 
     function createService() {
         let form = JSON.stringify({

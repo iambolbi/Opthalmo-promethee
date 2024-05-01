@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class Functions
 {
@@ -17,11 +18,13 @@ class Functions
 
     private ManagerRegistry $managerRegistry;
     private TLoginRepository $loginRepository;
+    private UserPasswordHasherInterface $hasher;
 
-    public function __construct(ManagerRegistry $managerRegistry,  TLoginRepository $loginRepository)
+    public function __construct(UserPasswordHasherInterface $hasher, ManagerRegistry $managerRegistry,  TLoginRepository $loginRepository)
     {
         $this->managerRegistry = $managerRegistry;
         $this->loginRepository = $loginRepository;
+        $this->hasher = $hasher;
     }
 
 
@@ -83,4 +86,8 @@ class Functions
         return $this->loginRepository->findOneBy(['id'=>$id,'state'=>true]);
     }
 
+    public function hasher(): UserPasswordHasherInterface
+    {
+        return $this->hasher;
+    }
 }

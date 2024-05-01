@@ -17,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('insurance', name: 'insurance_ctrl_')]
+#[IsGranted('ROLE_ADMIN')]
 class InsuranceController extends AbstractController
 {
    
@@ -32,7 +34,7 @@ class InsuranceController extends AbstractController
     }
 
 
-
+    //    Affichage  des assurances
     #[Route('', name: 'insurance')]
     #[Template('settings/insurance.html.twig')]
     public function insurance(): array
@@ -43,7 +45,7 @@ class InsuranceController extends AbstractController
     }
 
 
-
+    //    Creer une assurance
     #[Route('/create', name: 'create')]
     public function createinsurance(): JsonResponse
     {
@@ -62,7 +64,7 @@ class InsuranceController extends AbstractController
         return $this->functions->success();
     }
 
-
+    //   Modifier une assurance
     #[Route('/update', name: 'update')]
     public function updateinsurance(): JsonResponse
     {
@@ -83,7 +85,7 @@ class InsuranceController extends AbstractController
         return $this->functions->success();
     }
 
-
+    //    Afficher une assurance
     #[Route('/find', name: 'find')]
     public function findinsurance(Request $request): JsonResponse
     {
@@ -97,7 +99,7 @@ class InsuranceController extends AbstractController
         return $this->functions->success($assurance->toArray());
     }
 
-
+    //    Supprimer une assurance
     #[Route('/delete', name: 'delete')]
     public function deleteinsurance(Request $request): JsonResponse
     {

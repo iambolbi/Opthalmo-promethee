@@ -17,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('roles', name: 'roles_ctrl_')]
+#[IsGranted('ROLE_ADMIN')]
 class RolesController extends AbstractController
 {
     private TRoleRepository $roleRepository;
@@ -30,6 +32,8 @@ class RolesController extends AbstractController
         $this->functions = $functions;
     }
   
+
+    //    Affichage  des rôles
     #[Route('', name: 'roles')]
     #[Template('settings/roles.html.twig')]
     public function roles(): array
@@ -42,6 +46,8 @@ class RolesController extends AbstractController
         ];
     }
 
+
+    //    Creer un rôle
     #[Route('/create', name: 'create')]
     public function createrole(): JsonResponse
     {
@@ -67,6 +73,7 @@ class RolesController extends AbstractController
     }
 
 
+    //   Modifier un rôle
     #[Route('/update', name: 'update')]
     public function updaterole(): JsonResponse
     {
@@ -93,7 +100,7 @@ class RolesController extends AbstractController
         return $this->functions->success();
     }
 
-
+    //    Afficher un rôle
     #[Route('/find', name: 'find')]
     public function findrole(Request $request): JsonResponse
     {
@@ -107,7 +114,7 @@ class RolesController extends AbstractController
         return $this->functions->success($role->toArray());
     }
 
-
+    //   Supprimer un rôle
     #[Route('/delete', name: 'delete')]
     public function deleterole(Request $request): JsonResponse
     {

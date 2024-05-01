@@ -96,7 +96,7 @@
     <div class="modal-content border">
 
       <div class="modal-header px-card bg-primary border-bottom-0">
-        <h5 class="modal-title text-white">Creer un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
+        <h5 class="modal-title text-white">Créer un utilisateur</h5><button class="btn-close me-n1" type="button" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
 
@@ -104,16 +104,16 @@
 
         <div class="mb-3">
           <label class="fs-0" for="fnUserUsername">Username</label>
-          <input class="form-control" type="text" id="fnUserUsername" required="required" />
+          <input class="form-control fnUser" type="text" id="fnUserUsername" required="required" />
         </div>
 
         <div class="mb-3">
           <label class="fs-0" for="fnUserPassword">Mot de passe </label>
-          <input class="form-control" type="password" id="fnUserPassword" required="required" />
+          <input class="form-control fnUser" type="password" id="fnUserPassword" required="required" />
         </div>
 
         <div class="mb-3"><label class="fs-0" for="fnUserRole">Roles</label>
-        <select class="form-select js-choice"  multiple="multiple" size="1" id="fnUserRole" data-options='{"removeItemButton":true,"placeholder":true}'>
+        <select class="form-select js-choice fnUser"  multiple="multiple" size="1" id="fnUserRole" data-options='{"removeItemButton":true,"placeholder":true}'>
           <option value=""></option>
           {% for role in roles %}
             <option value="{{ role.id }}">{{ role.libelle }} </option>
@@ -151,7 +151,7 @@
 
         <div class="mb-3">
           <label class="fs-0" for="feUserUsername">Nom d'utilisateur</label>
-          <input class="form-control" type="text" id="feUserUsername" required="required" />
+          <input class="form-control feUser" type="text" id="feUserUsername" required="required" />
         </div>
 
         <div class="mb-3">
@@ -160,7 +160,7 @@
         </div>
 
         <div class="mb-3"><label class="fs-0" for="feUserRole">Roles</label>
-        <select class="form-select js-choice"  multiple="multiple" size="1" id="feUserRole" data-options='{"removeItemButton":true,"placeholder":true}'>
+        <select class="form-select js-choice feUser"  multiple="multiple" size="1" id="feUserRole" data-options='{"removeItemButton":true,"placeholder":true}'>
           <option value=""></option>
           {% for role in roles %}
             <option value="{{ role.id }}">{{ role.libelle }} </option>
@@ -191,7 +191,7 @@
   $(function() {
 
    
-      let btnCreateUser = $('#btnCreateUser'), btnUpdateUser = $('#btnUpdateUser'),feUserId = $('#feUserId'),feUserUsername = $('#feUserUsername'), feUserRole = $('#feUserRole'),
+      let btnCreateUser = $('#btnCreateUser'), btnUpdateUser = $('#btnUpdateUser'),feUserId = $('#feUserId'),feUserUsername = $('#feUserUsername'),feUserPassowrd = $('#feUserPassowrd'), feUserRole = $('#feUserRole'),
        
       feUserRoleChoice = new Choices(document.getElementById('feUserRole'), {
         removeItemButton: true, placeholder: true, shouldSort: false, itemSelectText: '',
@@ -203,7 +203,7 @@
         let form = JSON.stringify({
             username: $('#fnUserUsername').val(),
             password: $('#fnUserPassword').val(), 
-            role: $('#fnUserRole').val(),
+            roles: $('#fnUserRole').val(),
         })
 
         console.log("form", form)
@@ -223,13 +223,14 @@
         let form = JSON.stringify({
             id: feUserId.val(),
             username: feUserUsername.val(),
-            role: feUserRole.val(),
+            password: feUserPassowrd.val(), 
+            roles: feUserRole.val(),
         })
-        requestPost('{{ path('roles_ctrl_update') }}', form, '.feUser', '#btnUpdateUser').then(() => {
+        requestPost('{{ path('users_ctrl_update') }}', form, '.feUser', '#btnUpdateUser').then(() => {
             iziToast.destroy();
             iziToast.success({
                 title: 'Succès',
-                message: "Le role a été modifié avec succès",
+                message: "L'utilisateur a été modifié avec succès",
                 position: 'topRight',
             });
             location.reload();
@@ -269,7 +270,7 @@
             cancelButtonText: 'Fermer'
         }).then((result) => {
             if (result.isConfirmed) {
-                requestGet('{{ path('roles_ctrl_delete') }}?code=' + dataRowId).then(() => {
+                requestGet('{{ path('users_ctrl_delete') }}?code=' + dataRowId).then(() => {
                     iziToast.destroy();
                     iziToast.success({
                         title: 'Succès',
