@@ -12,6 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -36,17 +37,6 @@ class PatientsController extends AbstractController
     #[Template('patients/index.html.twig')]
     public function patients(): array
     {
-
-        // $user = new TLogin();
-        // $user->setUsername('adminit');
-
-        // $pass = 'adminit';
-        // $hashPassword = $passwordHasher->hashPassword($user,$pass);
-
-        // $user->setPassword($hashPassword);
-        
-        // $entityManager->persist($user);
-        // $entityManager->flush();
 
         return [
             'patients' => $this->patientRepository->findBy(['state'=>true])
@@ -85,40 +75,20 @@ class PatientsController extends AbstractController
     {
       
         $data = $this->functions->jsondecode();
-        if (!isset($data->id,$data->username,$data->password,$data->roles))
+        if (!isset($data->id,$data->nom,$data->prenom,$data->contact,$data->adresse))
             return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
 
-        $user = $this->loginRepository->findOneBy(['id'=>$data->id, 'state'=>true]);   
-        if (!$user) return $this->functions->error(ErrorHttp::MSG_USER_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        $patient = $this->patientRepository->findOneBy(['id'=>$data->id, 'state'=>true]);   
+        if (!$patient) return $this->functions->error(ErrorHttp::MSG_PATIENT_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-        $user->setUsername($data->username);
+        $patient->setNom($data->nom)
+        ->setPrenom($data->prenom)
+        ->setContact($data->contact)
+        ->setAdresse($data->adresse);
 
-        if(strlen($data->password)>0)
-            $user->setPassword($this->functions->hasher()->hashPassword($user,$data->password));
+   
+        $this->functions->em()->persist($patient);
 
-        $this->functions->em()->persist($user);
-
-        $userRoles = $this->userRoleRepository->findBy(['fk_login'=>$user->getId(),'state'=>true]);
-
-        foreach($userRoles  as $userRole)
-        {
-            $userRole->setState(false);
-            $this->functions->em()->persist($userRole);
-        }
-
-        foreach($data->roles as $role)
-        {
-            $role = $this->roleRepository->findOneBy(['id' => $role, 'state' => true]);
-            // if (!$role) return $this->functions->error(ErrorHttp::MSG_ROLE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
-            if($role)
-            {
-                $userRole = (new TUserRole())->setFkLogin($user)
-                ->setFkRole($role);
-                $this->functions->em()->persist($userRole);
-            }
-        }
-      
-        $this->functions->em()->persist($user);
         $this->functions->em()->flush();
 
 
@@ -133,12 +103,12 @@ class PatientsController extends AbstractController
     {
         $id = $request->query->get('code');
         
-        $login = $this->loginRepository->findOneBy(['id' => $id, 'state' =>  true]);
-        if (!$id || !$login)
-            return $this->functions->error(ErrorHttp::MSG_USER_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        $patient = $this->patientRepository->findOneBy(['id' => $id, 'state' =>  true]);
+        if (!$id || !$patient)
+            return $this->functions->error(ErrorHttp::MSG_PATIENT_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
-        return $this->functions->success($login->toArray());
+        return $this->functions->success($patient->toArray());
     }
 
 //    Supprimer un utilisateur
@@ -147,12 +117,12 @@ class PatientsController extends AbstractController
     {
         $id = $request->query->get('code');
 
-        $user = $this->loginRepository->findOneBy(['id' => $id, 'state' =>  true]);
-        if (!$id || !$user)
-            return $this->functions->error(ErrorHttp::MSG_USER_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        $patient = $this->patientRepository->findOneBy(['id' => $id, 'state' =>  true]);
+        if (!$id || !$patient)
+            return $this->functions->error(ErrorHttp::MSG_PATIENT_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-        $user->setState(false);
-        $this->functions->em()->persist($user);
+        $patient->setState(false);
+        $this->functions->em()->persist($patient);
         $this->functions->em()->flush();
 
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);

@@ -4,7 +4,10 @@ namespace App\Shared;
 
 use App\Entity\TLog;
 use App\Entity\TLogin;
+use App\Entity\TRendezVous;
 use App\Repository\TLoginRepository;
+use App\Repository\TRendezVousRepository;
+use DateTime;
 use Doctrine\ORM\Query\Expr\Func;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -19,12 +22,14 @@ class Functions
     private ManagerRegistry $managerRegistry;
     private TLoginRepository $loginRepository;
     private UserPasswordHasherInterface $hasher;
+    private TRendezVousRepository $rendezVousRepository;
 
-    public function __construct(UserPasswordHasherInterface $hasher, ManagerRegistry $managerRegistry,  TLoginRepository $loginRepository)
+    public function __construct(TRendezVousRepository $rendezVousRepository, UserPasswordHasherInterface $hasher, ManagerRegistry $managerRegistry,  TLoginRepository $loginRepository)
     {
         $this->managerRegistry = $managerRegistry;
         $this->loginRepository = $loginRepository;
         $this->hasher = $hasher;
+        $this->rendezVousRepository = $rendezVousRepository;
     }
 
 
@@ -90,4 +95,49 @@ class Functions
     {
         return $this->hasher;
     }
+
+    public function dateTime(bool $timeNull = false):?DateTime
+    {
+        $date = null;
+        try{
+            $date = new DateTime();
+            if($timeNull)
+            {
+                $date->setTime(0,0,0);
+            }
+        }catch(Exception $exception){
+
+        }
+        return $date;
+    }
+
+    public function dateCreate(string $date, string $format = 'Y-m-d')
+    {
+        return $date? DateTime::createFromFormat($format??'Y-m-d', $date):null;
+    }
+
+    public function getCodeRendezVous(?string $prefix = null, TRendezVous $rendezVous = null): string
+    {
+        if (!$prefix) $prefix = '';
+        $code = 'RDV';
+        $code_valid = false;
+        if ($rendezVous) {
+            $nbre_zero = 4 - strlen(strval($rendezVous->getId()));
+            if ($nbre_zero > 0) {
+                $code .= str_repeat('0', $nbre_zero);
+            }
+            $code .= strval($rendezVous->getId());
+        }
+        while (!$code_valid) {
+            $check_reserve_code = $this->rendezVousRepository->findOneBy(['code' => $code]);
+            if (!$check_reserve_code) {
+                $code_valid = true;
+            } else {
+                $code = $code . $prefix . strtoupper(substr(str_shuffle(Vars::CODE), 0, 6 - strlen($prefix)));
+            }
+        }
+        return $code;
+    }
+
+    
 }

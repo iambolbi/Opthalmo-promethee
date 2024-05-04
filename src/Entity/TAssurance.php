@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TAssuranceRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,10 +31,12 @@ class TAssurance
 
     public function __construct()
     {
+        if($this->date === null) $this->date = new DateTime(); 
+        
         $this->tRendezPrestations = new ArrayCollection();
     }
 
-
+  
     public function toArray(): array
     {
         return $this?[

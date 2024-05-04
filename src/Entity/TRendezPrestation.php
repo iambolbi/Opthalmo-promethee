@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TRendezPrestationRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name:"t_rendez_prestation")]
@@ -38,6 +39,11 @@ class TRendezPrestation
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        if($this->date === null) $this->date = new DateTime(); 
     }
 
     public function getFkPrestation(): ?TPrestation

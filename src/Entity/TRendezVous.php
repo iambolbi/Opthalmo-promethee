@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TRendezVousRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -42,8 +43,14 @@ class TRendezVous
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $date_rendez_vous = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $code = null;
+
+   
     public function __construct()
     {
+        if($this->date === null) $this->date = new DateTime(); 
+
         $this->tRendezPrestations = new ArrayCollection();
     }
 
@@ -150,6 +157,18 @@ class TRendezVous
     public function setDateRendezVous(?\DateTimeInterface $date_rendez_vous): static
     {
         $this->date_rendez_vous = $date_rendez_vous;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }

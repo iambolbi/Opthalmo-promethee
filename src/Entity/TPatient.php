@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TPatientRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,9 +35,21 @@ class TPatient
     #[ORM\OneToMany(targetEntity: TRendezVous::class, mappedBy: 'fk_patient')]
     private Collection $tRendezVouses;
 
+    public function toArray(): array
+    {
+        return $this?[
+            'id'=>$this->id,
+            'nom'=>$this->nom,
+            'prenom'=>$this->prenom,
+            'contact'=>$this->contact,
+            'adresse'=>$this->adresse,
+        ]:null;
+    }
+
+  
     public function __construct()
     {
-        
+        if($this->date === null) $this->date = new DateTime(); 
         $this->tRendezVouses = new ArrayCollection();
     }
 

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Utils\TraitEntity;
 use App\Repository\TMedecinRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,8 +36,10 @@ class TMedecin
     #[ORM\OneToMany(targetEntity: TRendezPrestation::class, mappedBy: 'fk_medecin')]
     private Collection $tRendezPrestations;
 
+ 
     public function __construct()
     {
+        if($this->date === null) $this->date = new DateTime(); 
         
         $this->tRendezPrestations = new ArrayCollection();
     }

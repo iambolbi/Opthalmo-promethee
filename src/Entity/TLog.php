@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use App\Entity\Utils\TraitEntity;
 use App\Repository\TLogRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TLogRepository::class)]
 class TLog
 {
+    use TraitEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,6 +36,11 @@ class TLog
 
     #[ORM\ManyToOne(inversedBy: 'tLogs')]
     private ?TLogin $fk_login = null;
+
+    public function __construct()
+    {
+        if($this->date === null) $this->date = new DateTime(); 
+    }
 
     public function getId(): ?int
     {

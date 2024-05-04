@@ -45,6 +45,12 @@ class ErrorHttp
         "code" => 500
     ];
     
+    public const MSG_PATIENT_NOT_FOUND =[
+        "error" => "patient ". self::MSG_NOT_FOUND,
+        "title" => "Le patient  est introuvable",
+        "message" => "Impossible d'afficher cette page ",
+        "code" => 500
+    ];
 
     public const MSG_ASSURANCE_NOT_FOUND =[
         "error" => "assurance ". self::MSG_NOT_FOUND,
