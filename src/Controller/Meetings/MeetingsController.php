@@ -43,7 +43,7 @@ class MeetingsController extends AbstractController
 
     #[Route('', name: 'meetings')]
     #[Template('meetings/index.html.twig')]
-    public function index(): array
+    public function meetings(): array
     {
 
         return [
@@ -58,26 +58,27 @@ class MeetingsController extends AbstractController
 
     //    Creer un rendez-vous
     #[Route('/create', name: 'create')]
-    public function createuser(): JsonResponse
+    public function createMetting(): JsonResponse
     {
         $data = $this->functions->jsondecode();
-        if (!isset($data->fk_medecin,$data->fk_patient,$data->fk_assurance,$data->fk_prestation,$data->pourcentage, $data->espece, $data->date_rendez_vous, $data->description))
+        if (!isset($data->fk_medecin,$data->fk_patient,$data->fk_assurance,$data->date_rendez_vous,$data->fk_prestation,$data->pourcentage, $data->description))
             return $this->functions->error(ErrorHttp::MSG_FORM_INVALID);
 
+        //dd($data);
         $medecin = $this->medecinRepository->findOneBy(['state'=>true, 'id'=>$data->fk_medecin]);
-        if ($medecin)
+        if (!$medecin)
             return $this->functions->error(ErrorHttp::MSG_MEDECIN_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
     
         $patient = $this->patientRepository->findOneBy(['state'=>true, 'id'=>$data->fk_patient]);
-        if ($patient)
+        if (!$patient)
             return $this->functions->error(ErrorHttp::MSG_MEDECIN_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-        $assurance = $this->assuranceRepository->findOneBy(['state'=>true, 'id'=>$data->fk_medecin]);
-        if ($assurance)
+        $assurance = $this->assuranceRepository->findOneBy(['state'=>true, 'id'=>$data->fk_assurance]);
+        if (!$assurance)
             return $this->functions->error(ErrorHttp::MSG_ASSURANCE_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
 
-        $prestation = $this->prestationRepository->findOneBy(['state'=>true, 'id'=>$data->fk_medecin]);
-        if ($prestation)
+        $prestation = $this->prestationRepository->findOneBy(['state'=>true, 'id'=>$data->fk_prestation]);
+        if (!$prestation)
             return $this->functions->error(ErrorHttp::MSG_PRESTATION_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         
     
@@ -91,7 +92,13 @@ class MeetingsController extends AbstractController
         $this->functions->em()->flush();
         $rendezvous->setCode($this->functions->getCodeRendezVous(null,$rendezvous));
 
-        $rendezVousPrestation = (new TRendezPrestation())->setFkMedecin($medecin)
+        $pourcentage = $prestation->getValeur() * $data->pourcentage / 100;
+        $espece = $prestation->getValeur() - $pourcentage ;
+
+       
+        $rendezVousPrestation = (new TRendezPrestation())->setPartAssurance($pourcentage)
+                                                         ->setPartPatient($espece)
+                                                        ->setFkMedecin($medecin)
                                                         ->setFkPrestation($prestation)
                                                         ->setFkAssurance($assurance);
                                                         
