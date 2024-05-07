@@ -38,7 +38,7 @@ class TRendezVous
     private Collection $tRendezPrestations;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $statut = null;
+    private ?int $statut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $date_rendez_vous = null;
@@ -137,16 +137,38 @@ class TRendezVous
         return $this;
     }
 
-    public function isStatut(): ?bool
+    public function getStatut(): ?int
     {
-        return $this->statut;
+        return $this->statut ?? 0;
     }
 
-    public function setStatut(?bool $statut): static
+    public function setStatut(?int $statut): static
     {
         $this->statut = $statut;
 
         return $this;
+    }
+
+
+    public function getStatutText(): ?string
+    {
+        if($this->statut===0)
+            return "En attente";
+        elseif ($this->statut===1)
+            return "Reçu";
+        else 
+            return "Annuler";
+    }
+
+
+    public function getStatutTextClassName(): ?string
+    {
+        if($this->statut===0)
+            return "bg-soft-secondary";
+        elseif ($this->statut===1)
+            return "bg-soft-success";
+        else 
+            return "bg-soft-danger";
     }
 
     public function getDateRendezVous(): ?\DateTimeInterface

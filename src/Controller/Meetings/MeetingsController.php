@@ -9,6 +9,7 @@ use App\Repository\TAssuranceRepository;
 use App\Repository\TMedecinRepository;
 use App\Repository\TPatientRepository;
 use App\Repository\TPrestationRepository;
+use App\Repository\TRendezVousRepository;
 use App\Shared\ErrorHttp;
 use App\Shared\Functions;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,15 +30,17 @@ class MeetingsController extends AbstractController
     private TAssuranceRepository $assuranceRepository;
     private TPrestationRepository $prestationRepository;
     private Functions $functions;
+    private TRendezVousRepository $rendezvousRepository;
   
 
-    public function __construct(Functions $functions,TMedecinRepository $medecinRepository, TPatientRepository $patientRepository, TAssuranceRepository $assuranceRepository, TPrestationRepository $prestationRepository )
+    public function __construct(TRendezVousRepository $rendezvousRepository, Functions $functions,TMedecinRepository $medecinRepository, TPatientRepository $patientRepository, TAssuranceRepository $assuranceRepository, TPrestationRepository $prestationRepository )
     {
         $this->functions = $functions;      
         $this->medecinRepository = $medecinRepository;
         $this->assuranceRepository = $assuranceRepository;
         $this->prestationRepository = $prestationRepository;  
         $this->patientRepository = $patientRepository;
+        $this->rendezvousRepository = $rendezvousRepository;
     }
 
 
@@ -45,12 +48,15 @@ class MeetingsController extends AbstractController
     #[Template('meetings/index.html.twig')]
     public function meetings(): array
     {
+       $rendezVous = $this->rendezvousRepository->findOneBy(['state'=>true]);
 
+        //dd($rendezVous->getCode());
         return [
             'medecins' => $this->medecinRepository->findBy(['state'=>true]),
             'assurances' => $this->assuranceRepository->findBy(['state'=>true]),
             'patients' =>$this->patientRepository->findBy(['state'=>true]),
-            'prestations' => $this->prestationRepository->findBy(['state'=>true])
+            'prestations' => $this->prestationRepository->findBy(['state'=>true]),
+            'rendezVous' => $this->rendezvousRepository->findBy(['state'=>true],['id'=>'DESC'])
         ];
     }
 
@@ -86,6 +92,7 @@ class MeetingsController extends AbstractController
         $rendezvous = (new TRendezVous())->setDiagnostic($data->description)
         ->setFkLogin($this->functions->getUser($this->getUser()))
         ->setFkPatient($patient)
+        ->setStatut(0)
             ->setDateRendezVous($this->functions->dateCreate($data->date_rendez_vous));
 
         $this->functions->em()->persist($rendezvous);
@@ -103,7 +110,7 @@ class MeetingsController extends AbstractController
                                                         ->setFkAssurance($assurance);
                                                         
                                                         
-
+        $this->functions->em()->flush();
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         return $this->functions->success();
     }

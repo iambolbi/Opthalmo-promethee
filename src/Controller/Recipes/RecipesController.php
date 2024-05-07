@@ -3,6 +3,8 @@
 namespace App\Controller\Recipes;
 
 use App\Entity\TLogin;
+use App\Repository\TRendezVousRepository;
+use App\Shared\Functions;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bridge\Twig\Attribute\Template;
@@ -14,25 +16,24 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('recipes', name: 'recipes_ctrl_')]
 class RecipesController extends AbstractController
 {
-   
+    private Functions $functions;
+    private TRendezVousRepository $rendezvousRepository;
+
+
+    public function __construct(Functions $functions, TRendezVousRepository $rendezVousRepository)
+    {
+        $this->functions= $functions ;
+        $this->rendezvousRepository = $rendezVousRepository;
+        
+    }
 
     #[Route('/', name: 'recipes')]
     #[Template('recipes/index.html.twig')]
-    public function index(): array
+    public function recipes(): array
     {
 
-        
-        // $user = new TLogin();
-        // $user->setUsername('adminit');
-
-        // $pass = 'adminit';
-        // $hashPassword = $passwordHasher->hashPassword($user,$pass);
-
-        // $user->setPassword($hashPassword);
-        
-        // $entityManager->persist($user);
-        // $entityManager->flush();
-
-        return [];
+        return [
+            'rendezVous' => $this->rendezvousRepository->findBy(['state'=>true],['id'=>'DESC'])
+        ];
     }
 }
