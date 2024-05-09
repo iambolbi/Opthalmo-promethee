@@ -105,7 +105,9 @@ class MeetingsController extends AbstractController
        
         $rendezVousPrestation = (new TRendezPrestation())->setPartAssurance($pourcentage)
                                                          ->setPartPatient($espece)
+                                                         ->setFkRendezVous($rendezvous)
                                                         ->setFkMedecin($medecin)
+                                        
                                                         ->setFkPrestation($prestation)
                                                         ->setFkAssurance($assurance);
                                                         

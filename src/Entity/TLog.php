@@ -7,6 +7,7 @@ use App\Repository\TLogRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Table(name:"t_log")]
 #[ORM\Entity(repositoryClass: TLogRepository::class)]
 class TLog
 {

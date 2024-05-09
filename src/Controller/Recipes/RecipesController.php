@@ -31,6 +31,13 @@ class RecipesController extends AbstractController
     #[Template('recipes/index.html.twig')]
     public function recipes(): array
     {
+        $rend = $this->rendezvousRepository->findOneBy(['state'=>true],['id'=>'DESC']);
+
+        //dd(count($rend->getTRendezPrestations()));
+        foreach($rend->getTRendezPrestations() as $item)
+        {
+            dd($item);
+        }
 
         return [
             'rendezVous' => $this->rendezvousRepository->findBy(['state'=>true],['id'=>'DESC'])
