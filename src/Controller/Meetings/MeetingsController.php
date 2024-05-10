@@ -96,7 +96,6 @@ class MeetingsController extends AbstractController
             ->setDateRendezVous($this->functions->dateCreate($data->date_rendez_vous));
 
         $this->functions->em()->persist($rendezvous);
-        $this->functions->em()->flush();
         $rendezvous->setCode($this->functions->getCodeRendezVous(null,$rendezvous));
 
         $pourcentage = $prestation->getValeur() * $data->pourcentage / 100;
@@ -107,11 +106,11 @@ class MeetingsController extends AbstractController
                                                          ->setPartPatient($espece)
                                                          ->setFkRendezVous($rendezvous)
                                                         ->setFkMedecin($medecin)
-                                        
                                                         ->setFkPrestation($prestation)
                                                         ->setFkAssurance($assurance);
-                                                        
-                                                        
+
+        $this->functions->em()->persist($rendezVousPrestation);
+                                                                                     
         $this->functions->em()->flush();
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         return $this->functions->success();

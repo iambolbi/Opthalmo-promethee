@@ -34,10 +34,10 @@ class RecipesController extends AbstractController
         $rend = $this->rendezvousRepository->findOneBy(['state'=>true],['id'=>'DESC']);
 
         //dd(count($rend->getTRendezPrestations()));
-        foreach($rend->getTRendezPrestations() as $item)
-        {
-            dd($item);
-        }
+    //    foreach($rend->getTRendezPrestations() as $item)
+    //    {
+     //       dd($item);
+     //   }
 
         return [
             'rendezVous' => $this->rendezvousRepository->findBy(['state'=>true],['id'=>'DESC'])
