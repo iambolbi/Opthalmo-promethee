@@ -48,7 +48,7 @@ class PatientsController extends AbstractController
 
     //    Creer un utilisateur
     #[Route('/create', name: 'create')]
-    public function createuser(): JsonResponse
+    public function createpatient(): JsonResponse
     {
         $data = $this->functions->jsondecode();
         if (!isset($data->nom,$data->prenom,$data->contact,$data->adresse))
@@ -71,7 +71,7 @@ class PatientsController extends AbstractController
 
 //    Modfiier un utilisateur 
     #[Route('/update', name: 'update')]
-    public function updaterole(): JsonResponse
+    public function updatepatient(): JsonResponse
     {
       
         $data = $this->functions->jsondecode();
@@ -99,7 +99,7 @@ class PatientsController extends AbstractController
 
 //    Rechercher un utilisateur
     #[Route('/find', name: 'find')]
-    public function finduser(Request $request): JsonResponse
+    public function findpatient(Request $request): JsonResponse
     {
         $id = $request->query->get('code');
         
@@ -111,9 +111,26 @@ class PatientsController extends AbstractController
         return $this->functions->success($patient->toArray());
     }
 
+    //    Detail des informations sur patient 
+    #[Route('/detail', name: 'detail')]
+    #[Template('patients/detail-patient.html.twig')]
+    public function detailpatient(Request $request): array
+    {
+        $id = $request->query->get('code');
+        
+        $patient = $this->patientRepository->findOneBy(['id' => $id, 'state' =>  true]);
+        if (!$id || !$patient)
+            return $this->functions->error(ErrorHttp::MSG_PATIENT_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+
+        $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        return [
+            'patient' => $patient
+        ];
+    }
+
 //    Supprimer un utilisateur
     #[Route('/delete', name: 'delete')]
-    public function deleteuser(Request $request): JsonResponse
+    public function deletepatient(Request $request): JsonResponse
     {
         $id = $request->query->get('code');
 

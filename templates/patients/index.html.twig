@@ -45,9 +45,9 @@
         <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
           <thead class="bg-200 text-900">
             <tr>
-              <th>
+              {# <th>
                 <div class="form-check fs-0 mb-0 d-flex align-items-center"><input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' /></div>
-              </th>
+              </th> #}
               <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Nom</th>
               <th class="sort pe-1 align-middle white-space-nowrap" data-sort="email">Prenom</th>
               <th class="sort pe-1 align-middle white-space-nowrap" data-sort="phone">Contact</th>
@@ -61,19 +61,21 @@
 
           {% for patient in patients %}
             <tr class="btn-reveal-trigger">
-              <td class="align-middle py-2" style="width: 28px;">
+              {# <td class="align-middle py-2" style="width: 28px;">
                 <div class="form-check fs-0 mb-0 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="customer-0" data-bulk-select-row="data-bulk-select-row" /></div>
-              </td>
-              <td class="name align-middle white-space-nowrap py-2"><a href="customer-details.html">
+              </td> #}
+              <td class="name align-middle white-space-nowrap py-2">
+                <a href="{{ path('patients_ctrl_detail') }}?code={{ patient.id }} ">
                   <div class="d-flex d-flex align-items-center">
                     <div class="avatar avatar-xl me-2">
-                      <div class="avatar-name rounded-circle"><span>{{ patient.nom }}{{ patient.prenom }}</span></div>
+                      <div class="avatar-name rounded-circle"><span>A</span></div>
                     </div>
                     <div class="flex-1">
                       <h5 class="mb-0 fs--1">{{ patient.nom }} </h5>
                     </div>
                   </div>
-                </a></td>
+                </a>
+              </td>
               <td class="email align-middle py-2">{{ patient.prenom }}</td>
               <td class="phone align-middle white-space-nowrap py-2">{{ patient.contact }}</td>
               <td class="address align-middle white-space-nowrap ps-5 py-2">{{ patient.adresse }}</td>

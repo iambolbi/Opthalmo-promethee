@@ -56,10 +56,16 @@
               <td class="patient py-2 align-middle">{{rendezVousItem.fkPatient?rendezVousItem.fkPatient.nom:"" }} </td>
               <td class="date py-2 align-middle">{{rendezVousItem.dateRendezVous|date('Y-m-d') }} </td>
               <td class="address py-2 align-middle white-space-nowrap">
-                {{rendezVousItem.diagnostic }}
+                {% for cotation in rendezVousItem.tRendezPrestations|filter(v=> v.state is same as(true)) %}
+                  {% if cotation.state is same as(true) %}
+                    <strong>{{ cotation.fkPrestation.libelle }}</strong>
+                  {% endif %}
+              {% endfor %} 
               </td>
               <td class="address py-2 align-middle white-space-nowrap">
-                {{rendezVousItem.diagnostic }}
+
+              {{rendezVousItem.diagnostic }}
+              
               </td>
               <td class="status py-2 align-middle text-center fs-0 white-space-nowrap"><span class="badge badge rounded-pill d-block badge-soft-success">Completed<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span></td>
               <td class="amount py-2 text-end fs-0 fw-medium ">
