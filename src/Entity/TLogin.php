@@ -62,6 +62,7 @@ class TLogin implements UserInterface, PasswordAuthenticatedUserInterface
         return $this? [
             'id'=> $this->id,
             'username' => $this->username,
+            'tUserRoles' => $this->getTUserRoles()->toArray()
             // 'tUserRoles' =>  array_map(function (TUserRole $userRole) {
             //     return $userRole->toArray();
             // }, array_filter($this->getTUserRoles()->getValues(), function (TUserRole $userRole) {

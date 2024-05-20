@@ -5,6 +5,7 @@ namespace App\Controller\Patients;
 use App\Entity\TLogin;
 use App\Entity\TPatient;
 use App\Repository\TPatientRepository;
+use App\Repository\TRendezVousRepository;
 use App\Shared\ErrorHttp;
 use App\Shared\Functions;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,11 +26,13 @@ class PatientsController extends AbstractController
    
     private Functions $functions;
     private TPatientRepository $patientRepository;
+    private TRendezVousRepository $rendezvousRepository;
 
-    public function __construct(TPatientRepository $patientRepository, Functions $functions)
+    public function __construct(TRendezVousRepository $rendezvousRepository, TPatientRepository $patientRepository, Functions $functions)
     {
         $this->patientRepository = $patientRepository;
         $this->functions = $functions;
+        $this->rendezvousRepository = $rendezvousRepository;
         
     }
 
@@ -121,10 +124,14 @@ class PatientsController extends AbstractController
         $patient = $this->patientRepository->findOneBy(['id' => $id, 'state' =>  true]);
         if (!$id || !$patient)
             return $this->functions->error(ErrorHttp::MSG_PATIENT_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
+        
+        $rendezVous = $this->rendezvousRepository->findBy(['fk_patient'=>$patient->getId(),'state'=>true]);
+
 
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         return [
-            'patient' => $patient
+            'patient' => $patient,
+            'rendezVous' =>$rendezVous
         ];
     }
 

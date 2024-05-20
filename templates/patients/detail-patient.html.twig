@@ -43,46 +43,54 @@
       <div class="col">
         <h5 class="mb-0">Details</h5>
       </div>
-      <div class="col-auto"><a class="btn btn-falcon-default btn-sm" href="#!"><span class="fas fa-pencil-alt fs--2 me-1"></span>Update details</a></div>
+      <div class="col-auto">
+
+       
+
+        <button class="btn btn-falcon-default btn-sm btnEditRow" data-row-id="{{ patient.id }}" type="button" data-bs-toggle="modal" data-bs-target="#addPatientModal">
+						<span class="fas fa-pencil-alt fs--2 me-1"></span>Modifier
+				</button>
+
+      </div>
     </div>
   </div>
 
   <div class="card-body bg-light border-top">
     <div class="row">
       <div class="col-lg col-xxl-5">
-        <h6 class="fw-semi-bold ls mb-3 text-uppercase">Account Information</h6>
+        {# <h6 class="fw-semi-bold ls mb-3 text-uppercase">Account Information</h6> #}
         <div class="row">
           <div class="col-5 col-sm-4">
-            <p class="fw-semi-bold mb-1">ID</p>
+            <p class="fw-semi-bold mb-1">NOM</p>
           </div>
-          <div class="col">dcfasyo_Dfdjl</div>
+          <div class="col">{{ patient.nom }} </div>
         </div>
         <div class="row">
           <div class="col-5 col-sm-4">
-            <p class="fw-semi-bold mb-1">Created</p>
+            <p class="fw-semi-bold mb-1">PRENOM</p>
           </div>
-          <div class="col">2019/01/12 23:13</div>
+          <div class="col">{{ patient.prenom }}</div>
         </div>
         <div class="row">
           <div class="col-5 col-sm-4">
-            <p class="fw-semi-bold mb-1">Email</p>
+            <p class="fw-semi-bold mb-1">CONTACT</p>
           </div>
-          <div class="col"><a href="mailto:tony@gmail.com">tony@gmail.com</a></div>
+          <div class="col"><a href="#">{{ patient.contact }}</a></div>
         </div>
         <div class="row">
           <div class="col-5 col-sm-4">
-            <p class="fw-semi-bold mb-1">Description</p>
+            <p class="fw-semi-bold mb-1">ADRESSE</p>
           </div>
           <div class="col">
-            <p class="fst-italic text-400 mb-1">No Description</p>
+            <p class="fst-italic text-400 mb-1">{{ patient.adresse }}</p>
           </div>
         </div>
         <div class="row">
           <div class="col-5 col-sm-4">
-            <p class="fw-semi-bold mb-0">VAT number</p>
+            <p class="fw-semi-bold mb-0">CREE LE</p>
           </div>
           <div class="col">
-            <p class="fst-italic text-400 mb-0">No VAT number</p>
+            <p class="fst-italic text-400 mb-0">{{ patient.date|date('Y-m-d H:i:s') }}</p>
           </div>
         </div>
       </div>
@@ -130,51 +138,75 @@
     <h5 class="mb-0">Liste des rendez vous </h5>
   </div>
   <div class="card-body border-top p-0">
-    <div class="row g-0 align-items-center border-bottom py-2 px-3">
-      <div class="col-md-auto pe-3"><span class="badge badge-soft-success rounded-pill">200</span></div>
-      <div class="col-md mt-1 mt-md-0"><code>POST /v1/invoiceitems</code></div>
-      <div class="col-md-auto">
-        <p class="mb-0">2019/02/23 15:29:45</p>
+
+    {% for rendezVousItem in rendezVous %}
+
+      <div class="row g-0 align-items-center border-bottom py-2 px-3">
+        <div class="col-md-auto pe-3"><span class="badge badge-soft-success rounded-pill">200</span></div>
+        
+        <div class="col-md mt-1 mt-md-0">
+          <a href="order-details.html">{{ rendezVousItem.code }}</a> 
+        </div>
+
+        <div class="col-md-auto">
+          <a class="mb-0">
+          {% for cotation in rendezVousItem.tRendezPrestations|filter(v=> v.state is same as(true)) %}
+            {% if cotation.state is same as(true) %}
+             {{ cotation.fkPrestation.libelle }}
+            {% endif %}
+          {% endfor %} 
+          </a>
+        </div>
+
+        <div class="col-md-auto">
+          <p class="mb-0">2019/02/23 15:29:45</p>
+        </div>
       </div>
-    </div>
-    <div class="row g-0 align-items-center border-bottom py-2 px-3">
-      <div class="col-md-auto pe-3"><span class="badge badge-soft-warning rounded-pill">400</span></div>
-      <div class="col-md mt-1 mt-md-0"><code>POST /v1/invoiceitems</code></div>
-      <div class="col-md-auto">
-        <p class="mb-0">2019/02/19 21:32:12</p>
-      </div>
-    </div>
-    <div class="row g-0 align-items-center border-bottom py-2 px-3">
-      <div class="col-md-auto pe-3"><span class="badge badge-soft-success rounded-pill">200</span></div>
-      <div class="col-md mt-1 mt-md-0"><code>POST /v1/invoices/in_1Dnkhadfk</code></div>
-      <div class="col-md-auto">
-        <p class="mb-0">2019/02/26 12:23:43</p>
-      </div>
-    </div>
-    <div class="row g-0 align-items-center border-bottom py-2 px-3">
-      <div class="col-md-auto pe-3"><span class="badge badge-soft-success rounded-pill">200</span></div>
-      <div class="col-md mt-1 mt-md-0"><code>POST /v1/invoices/in_1Dnkhadfk</code></div>
-      <div class="col-md-auto">
-        <p class="mb-0">2019/02/12 23:32:12</p>
-      </div>
-    </div>
-    <div class="row g-0 align-items-center border-bottom py-2 px-3">
-      <div class="col-md-auto pe-3"><span class="badge badge-soft-danger rounded-pill">404</span></div>
-      <div class="col-md mt-1 mt-md-0"><code>POST /v1/invoices/in_1Dnkhadfk</code></div>
-      <div class="col-md-auto">
-        <p class="mb-0">2019/02/08 02:20:23</p>
-      </div>
-    </div>
-    <div class="row g-0 align-items-center border-bottom py-2 px-3">
-      <div class="col-md-auto pe-3"><span class="badge badge-soft-success rounded-pill">200</span></div>
-      <div class="col-md mt-1 mt-md-0"><code>POST /v1/invoices/in_1Dnkhadfk</code></div>
-      <div class="col-md-auto">
-        <p class="mb-0">2019/02/01 12:29:34</p>
-      </div>
-    </div>
+
+    {% endfor %}
+  
   </div>
-  <div class="card-footer bg-light p-0"><a class="btn btn-link d-block w-100" href="#!">View more logs<span class="fas fa-chevron-right fs--2 ms-1"></span></a></div>
+
+  {# <div class="card-footer bg-light p-0"><a class="btn btn-link d-block w-100" href="#!">View more logs<span class="fas fa-chevron-right fs--2 ms-1"></span></a></div> #}
+
 </div>
+
+
+
+<div class="modal fade" id="editPatientModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content border">
+
+				<div class="modal-header px-card bg-primary border-bottom-0">
+					<h5 class="modal-title text-white">Mise à jour patient</h5>
+					<button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body p-card">
+          <input class="form-control" type="text" id="fnPatientId" required="required" hidden/>
+
+					<div class="mb-3">
+						<label class="fs-0" for="fnPatientNom">Nom</label>
+						<input class="form-control fnPatient" id="fnPatientNom" type="text" required="required" name="fnPatientNom"/>
+					</div>
+					<div class="mb-3">
+						<label class="fs-0" for="fnPatientPrenom">Prenom</label><input class="form-control fnPatient" id="fnPatientPrenom" type="text" name="fnPatientPrenom"/></div>
+
+					<div class="mb-3">
+						<label class="fs-0" for="fnPatientContact">Contact</label><input class="form-control fnPatient" id="fnPatientContact" type="text" required="required" name="fnPatientContact"/></div>
+					<div class="mb-3">
+						<label class="fs-0" for="fnPatientAdresse">Adresse</label><input class="form-control fnPatient" id="fnPatientAdresse" type="text" name="fnPatientAdresse"/></div>
+
+				</div>
+
+				<div class="card-footer d-flex justify-content-end align-items-center bg-light">
+
+					<button class="btn btn-primary px-4" id="btnUpdatePatient" type="button">Mise à jour</button>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
   
 {% endblock %}
 {% block addjs %}
@@ -184,41 +216,18 @@
 
   $(function() {
 
-    let btnCreatePatient = $('#btnCreatePatient'), btnUpdateService = $('#btnUpdatePatient'),
-    fePatientId = $('#fePatientId'),fePatientNom = $('#fePatientNom'),fePatientPrenom = $('#fePatientPrenom'),fePatientContact = $('#fePatientContact'),fePatientAdresse = $('#fePatientAdresse')
-
-    function CreatePatient() {
-
-        let form = JSON.stringify({
-            nom: $('#fnPatientNom').val(),
-            prenom: $('#fnPatientPrenom').val(),
-            contact: $('#fnPatientContact').val(),
-            adresse: $('#fnPatientAdresse').val()
-           
-        })
-        console.log("form", form)
-        requestPost('{{ path('patients_ctrl_create') }}', form, '.fnPatient', '#btnCreatePatient').then(() => {
-            iziToast.destroy();
-          
-            iziToast.success({
-                title: 'Succès',
-                message: "Le patient a été créé avec succès",
-                position: 'topRight',
-            });
-            location.reload();
-        }); 
-
-    }
+    let  btnUpdateService = $('#btnUpdatePatient')
+  
 
 
     function UpdatePatient() {
       
         let form = JSON.stringify({
-            id:  $('#fePatientId').val(),
-            nom: $('#fePatientNom').val(),
-            prenom: $('#fePatientPrenom').val(),
-            contact: $('#fePatientContact').val(),
-            adresse: $('#fePatientAdresse').val()
+            id:  $('#fnPatientId').val(),
+            nom: $('#fnPatientNom').val(),
+            prenom: $('#fnPatientPrenom').val(),
+            contact: $('#fnPatientContact').val(),
+            adresse: $('#fnPatientAdresse').val()
 
         })
 
@@ -235,9 +244,6 @@
         });
     }
 
-    btnCreatePatient.on('click', function (){
-        CreatePatient();
-    });
     btnUpdateService.on('click', function (){
         UpdatePatient();
     });
@@ -246,45 +252,19 @@
         let dataRowId = $(this).data('row-id');
         requestGet('{{ path('patients_ctrl_find') }}?code=' + dataRowId).then((data) => {
             
-            console.log("role",data)
-            fePatientId.val(data.id);
-            fePatientNom.val(data.nom);
-            fePatientPrenom.val(data.prenom);
-            fePatientContact.val(data.contact);
-            fePatientAdresse.val(data.adresse);
+           console.log('row',dataRowId )
+            $('#fnPatientId').val(data.id);
+            $('#fnPatientNom').val(data.nom);
+            $('#fnPatientPrenom').val(data.prenom);
+            $('#fnPatientContact').val(data.contact);
+            $('#fnPatientAdresse').val(data.adresse);
+            
             $('#editPatientModal').modal('show');
 
         });
     });
-    $('.btnDeleteRow').on('click', function (){
-        let dataRowId = $(this).data('row-id');
-        let dataRowName = $(this).data('row-name');
-        Swal.fire({
-            title: "Supprimer la ligne ?", text: dataRowName,
-            icon: "question",
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            confirmButtonText: 'Supprimer',
-            cancelButtonText: 'Fermer'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                requestGet('{{ path('patients_ctrl_delete') }}?code=' + dataRowId).then(() => {
-                    iziToast.destroy();
-                    iziToast.success({
-                        title: 'Succès',
-                        message: "La prestation a été supprimé avec succès",
-                        position: 'topRight',
-                    });
-            location.reload();
 
-                 //   Turbolinks.visit(window.location.toString());
-                });
-            }
-        });
-    });
-
-
+ 
   })
 </script>
 

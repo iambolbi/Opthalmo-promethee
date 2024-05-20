@@ -249,7 +249,8 @@
         let dataRowId = $(this).data('row-id');
         requestGet('{{ path('users_ctrl_find') }}?code=' + dataRowId).then((data) => {
             
-            console.log("role",data )
+            console.log("role",data.tUserRoles )
+            
             feUserId.val(data.id);
             feUserUsername.val(data.username);
             feUserRoleChoice.removeActiveItems();
