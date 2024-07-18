@@ -155,20 +155,43 @@ class TRendezVous
         if($this->statut===0)
             return "En attente";
         elseif ($this->statut===1)
-            return "Reçu";
+            return "Accepté";
         else 
-            return "Annuler";
+            return "Annulé";
+    }
+
+
+    public function getStatutTextCalendar(): ?string
+    {
+        if (!$this->state)
+            return 'bg-soft-danger';
+        if ($this->statut == 0)
+            return 'bg-secondary';
+        elseif ($this->statut == 1) {
+            return 'bg-soft-primary';
+        }
+        elseif ($this->statut == -1)
+            return 'bg-soft-danger';
+        else
+            return 'bg-soft-secondary';
+
     }
 
 
     public function getStatutTextClassName(): ?string
     {
-        if($this->statut===0)
-            return "bg-soft-secondary";
-        elseif ($this->statut===1)
-            return "bg-soft-success";
-        else 
-            return "bg-soft-danger";
+        if (!$this->state)
+            return '<span class="badge fs--1 fw-normal bg-soft-danger">' . $this->getStatutText() . '</span>';
+        if ($this->statut == 0)
+            return '<span class="badge fs--1 fw-normal text-white bg-soft-warning">' . $this->getStatutText() . '</span>';
+        elseif ($this->statut == 1) {
+            return '<span class="badge fs--1 fw-normal text-white ' . 'bg-soft-primary' . '">' . $this->getstatutText() . '</span>';
+        }
+        elseif ($this->statut == -1)
+            return '<span class="badge fs--1 fw-normal text-white bg-soft-danger">' . $this->getStatutText() . '</span>';
+        else
+            return '<span class="badge fs--1 fw-normal text-white bg-soft-secondary">' . $this->getStatutText() . '</span>';
+
     }
 
     public function getDateRendezVous(): ?\DateTimeInterface

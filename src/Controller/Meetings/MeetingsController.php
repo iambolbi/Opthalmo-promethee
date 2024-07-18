@@ -17,6 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -96,7 +97,10 @@ class MeetingsController extends AbstractController
             ->setDateRendezVous($this->functions->dateCreate($data->date_rendez_vous));
 
         $this->functions->em()->persist($rendezvous);
-        $rendezvous->setCode($this->functions->getCodeRendezVous(null,$rendezvous));
+        $this->functions->em()->flush();
+        $rendezvous->setCode($this->functions->getCodeRendezVous($rendezvous));
+        $this->functions->em()->persist($rendezvous);
+
 
         $pourcentage = $prestation->getValeur() * $data->pourcentage / 100;
         $espece = $prestation->getValeur() - $pourcentage ;
@@ -114,5 +118,24 @@ class MeetingsController extends AbstractController
         $this->functions->em()->flush();
         $this->functions->log(['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         return $this->functions->success();
+    }
+
+
+
+    #[Route('/find', name: 'find')]
+    #[Template('meetings/meeting-detail.html.twig')]
+    public function findMeeting(Request $request): array
+    {
+        $code = $request->query->get('code');
+        $rendezVous = $this->rendezvousRepository->findOneBy(['state'=>true, 'id'=>$code]);
+
+        //dd($rendezVous->getCode());
+        return [
+            'medecins' => $this->medecinRepository->findBy(['state'=>true]),
+            'assurances' => $this->assuranceRepository->findBy(['state'=>true]),
+            'patients' =>$this->patientRepository->findBy(['state'=>true]),
+            'prestations' => $this->prestationRepository->findBy(['state'=>true]),
+            'rendezVous' => $rendezVous
+        ];
     }
 }

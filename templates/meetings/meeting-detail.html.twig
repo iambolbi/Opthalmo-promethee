@@ -6,57 +6,143 @@
 {% block base_content %}
 
 
-	<div class="card mb-3 overflow-hidden">
-		<div class="card-header">
-			<div class="row gx-0 align-items-center">
-				<div class="col-auto d-flex justify-content-end order-md-1">
-					<button class="btn icon-item icon-item-sm shadow-none p-0 me-1 ms-md-2" type="button" data-event="prev" data-bs-toggle="tooltip" title="Previous">
-						<span class="fas fa-arrow-left"></span>
-					</button>
-					<button class="btn icon-item icon-item-sm shadow-none p-0 me-1 me-lg-2" type="button" data-event="next" data-bs-toggle="tooltip" title="Next">
-						<span class="fas fa-arrow-right"></span>
-					</button>
-				</div>
-				<div class="col-auto col-md-auto order-md-2">
-					<h4 class="mb-0 fs-0 fs-sm-1 fs-lg-2 calendar-title"></h4>
-				</div>
-				<div class="col col-md-auto d-flex justify-content-end order-md-3">
-					<button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">Aujourd'hui</button>
-				</div>
-				<div class="col-md-auto d-md-none">
-					<hr/>
-				</div>
-				<div class="col-auto d-flex order-md-0">
+{#	<div class="card mb-3">#}
+{#		<div class="card-body">#}
+{#			<div class="row justify-content-between align-items-center">#}
+{#				<div class="col-md">#}
+{#					<h5 class="mb-2 mb-md-0 text-nowrap">Rendez-vous {{ rendezVous.code }}</h5>#}
+{#				</div>#}
 
-					<button class="btn btn-primary btn-sm btnCreateMeeting" type="button" data-bs-toggle="modal" data-bs-target="#addEventModal">
-						<span class="fas fa-plus me-2"></span>Creer un rendez-vous
-					</button>
-				
-				</div>
-    
-				<div class="col d-flex justify-content-end order-md-2">
-
-        <div class="dropdown font-sans-serif me-md-2">
-          <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="email-filter" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-            <span data-view-title="data-view-title">Vue Mois</span><span class="fas fa-sort ms-2 fs--1"></span>
-          </button>
-          <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="email-filter">
-            <a class="active dropdown-item d-flex justify-content-between" href="#!" data-fc-view="dayGridMonth">Vue Mois
-              <span class="icon-check">
-                <span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span>
-              </span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridWeek">Vue Semaine<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridDay">Vue Jour<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listWeek">Vue Detail<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listYear">Vue Annee<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a></div>
-      </div>
-					<button class="btn btn-primary btn-sm me-md-2" type="button" data-bs-toggle="modal" data-bs-target="#addPatientModal">
-						<span class="far fa-address-card me-2"></span>Patient</button>
+{#				<div class="col-md">#}
+{#					<button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button">#}
+{#						<span class="fas fa-arrow-down me-1"> </span>Download (.pdf)</button>#}
+{#					<button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button">#}
+{#						<span class="fas fa-print me-1"> </span>Print</button>#}
 
 
-				</div>
+{#				</div>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
 
+	<div class="card mb-3">
+		<div class="card-header bg-light">
+			<p class="fs--1 mb-0"><strong>{{ rendezVous.code }}</strong>
+
+			</p>
+		</div>
+		<div class="card-body">
+
+			<div class="row align-items-center">
+				<div class="col">
+					<h6 class="text-500">Invoice to</h6>
+					<h5>Antonio Banderas</h5>
+					<p class="fs--1">1954 Bloor Street West<br />Torronto ON, M6P 3K9<br />Canada</p>
+					<p class="fs--1"><a href="mailto:example@gmail.com">example@gmail.com</a><br /><a href="tel:444466667777">+4444-6666-7777</a></p>
+				</div>
+				<div class="col-sm-auto ms-auto">
+					<div class="table-responsive">
+						<table class="table table-sm table-borderless fs--1">
+							<tbody>
+							<tr>
+								<th class="text-sm-end">Invoice No:</th>
+								<td>14</td>
+							</tr>
+							<tr>
+								<th class="text-sm-end">Order Number:</th>
+								<td>AD20294</td>
+							</tr>
+							<tr>
+								<th class="text-sm-end">Invoice Date:</th>
+								<td>2018-09-25</td>
+							</tr>
+							<tr>
+								<th class="text-sm-end">Payment Due:</th>
+								<td>Upon receipt</td>
+							</tr>
+							<tr class="alert-success fw-bold">
+								<th class="text-sm-end">Amount Due:</th>
+								<td>$19688.40</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
+{#			<div class="table-responsive scrollbar mt-4 fs--1">#}
+{#				<table class="table table-striped border-bottom">#}
+{#					<thead class="light">#}
+{#					<tr class="bg-primary text-white dark__bg-1000">#}
+{#						<th class="border-0">Products</th>#}
+{#						<th class="border-0 text-center">Quantity</th>#}
+{#						<th class="border-0 text-end">Rate</th>#}
+{#						<th class="border-0 text-end">Amount</th>#}
+{#					</tr>#}
+{#					</thead>#}
+{#					<tbody>#}
+{#					<tr>#}
+{#						<td class="align-middle">#}
+{#							<h6 class="mb-0 text-nowrap">Platinum web hosting package</h6>#}
+{#							<p class="mb-0">Down 35mb, Up 100mb</p>#}
+{#						</td>#}
+{#						<td class="align-middle text-center">2</td>#}
+{#						<td class="align-middle text-end">$65.00</td>#}
+{#						<td class="align-middle text-end">$130.00</td>#}
+{#					</tr>#}
+{#					<tr>#}
+{#						<td class="align-middle">#}
+{#							<h6 class="mb-0 text-nowrap">2 Page website design</h6>#}
+{#							<p class="mb-0">Includes basic wireframes and responsive templates</p>#}
+{#						</td>#}
+{#						<td class="align-middle text-center">1</td>#}
+{#						<td class="align-middle text-end">$2,100.00</td>#}
+{#						<td class="align-middle text-end">$2,100.00</td>#}
+{#					</tr>#}
+{#					<tr>#}
+{#						<td class="align-middle">#}
+{#							<h6 class="mb-0 text-nowrap">Mobile App Development</h6>#}
+{#							<p class="mb-0">Includes responsive navigation</p>#}
+{#						</td>#}
+{#						<td class="align-middle text-center">8</td>#}
+{#						<td class="align-middle text-end">$5,00.00</td>#}
+{#						<td class="align-middle text-end">$4,000.00</td>#}
+{#					</tr>#}
+{#					<tr>#}
+{#						<td class="align-middle">#}
+{#							<h6 class="mb-0 text-nowrap">Web App Development</h6>#}
+{#							<p class="mb-0">Includes react spa</p>#}
+{#						</td>#}
+{#						<td class="align-middle text-center">6</td>#}
+{#						<td class="align-middle text-end">$2,000.00</td>#}
+{#						<td class="align-middle text-end">$12,000.00</td>#}
+{#					</tr>#}
+{#					</tbody>#}
+{#				</table>#}
+{#			</div>#}
+{#			<div class="row justify-content-end">#}
+{#				<div class="col-auto">#}
+{#					<table class="table table-sm table-borderless fs--1 text-end">#}
+{#						<tr>#}
+{#							<th class="text-900">Subtotal:</th>#}
+{#							<td class="fw-semi-bold">$18,230.00 </td>#}
+{#						</tr>#}
+{#						<tr>#}
+{#							<th class="text-900">Tax 8%:</th>#}
+{#							<td class="fw-semi-bold">$1458.40</td>#}
+{#						</tr>#}
+{#						<tr class="border-top">#}
+{#							<th class="text-900">Total:</th>#}
+{#							<td class="fw-semi-bold">$19688.40</td>#}
+{#						</tr>#}
+{#						<tr class="border-top border-top-2 fw-bolder text-900">#}
+{#							<th>Amount Due:</th>#}
+{#							<td>$19688.40</td>#}
+{#						</tr>#}
+{#					</table>#}
+{#				</div>#}
+{#			</div>#}
 		</div>
-		<div class="card-body p-0">
-			<div class="calendar-outline" id="meetingCalendar"></div>
-		</div>
+
 	</div>
 
 	<div class="modal fade" id="addEventModal" tabindex="-1">
@@ -127,10 +213,10 @@
 							</select>
 
 						</div>
-						
-						
 
-					
+
+
+
 
 							<div class="mb-3 col-12">
 								<label class="fs-0" for="fnMeetingPourcentage"> % Assurance</label>
@@ -138,8 +224,8 @@
 							</div>
 
 
-						
-              				
+
+
 
 							<div class="mb-3">
 								<label class="fs-0" for="fnMeetingDescription">Commentaire</label>
@@ -161,39 +247,7 @@
 	</div>
 
 
-	<div class="modal fade" id="addPatientModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content border">
 
-				<div class="modal-header px-card bg-primary border-bottom-0">
-					<h5 class="modal-title text-white">Creer un nouveau patient</h5>
-					<button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body p-card">
-
-					<div class="mb-3">
-						<label class="fs-0" for="fnPatientNom">Nom</label>
-						<input class="form-control fnPatient" id="fnPatientNom" type="text" required="required" name="fnPatientNom"/>
-					</div>
-					<div class="mb-3">
-						<label class="fs-0" for="fnPatientPrenom">Prenom</label><input class="form-control fnPatient" id="fnPatientPrenom" type="text" name="fnPatientPrenom"/></div>
-
-					<div class="mb-3">
-						<label class="fs-0" for="fnPatientContact">Contact</label><input class="form-control fnPatient" id="fnPatientContact" type="text" required="required" name="fnPatientContact"/></div>
-					<div class="mb-3">
-						<label class="fs-0" for="fnPatientAdresse">Adresse</label><input class="form-control fnPatient" id="fnPatientAdresse" type="text" name="fnPatientAdresse"/></div>
-
-				</div>
-
-				<div class="card-footer d-flex justify-content-end align-items-center bg-light">
-
-					<button class="btn btn-primary px-4" id="btnCreatePatient" type="button">Enregistrer</button>
-
-				</div>
-
-			</div>
-		</div>
-	</div>
 
 {% endblock %}
 {% block addjs %}
@@ -266,8 +320,8 @@
 				start: "{{ rendezVousItem.dateRendezVous|date('Y-m-d') }}",
 				
 				description: 'The starting of the programming contest',
-				className: '{{ rendezVousItem.statutTextCalendar }}',
-				url: '{{ path('meetings_ctrl_find') }}?code={{ rendezVousItem.id }}'
+				className: '{{ rendezVousItem.statutTextClassName }}',
+				url: 'http://google.com'
 				}, 
 
 				{% endfor %}

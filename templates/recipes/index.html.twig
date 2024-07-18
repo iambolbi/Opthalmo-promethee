@@ -4,12 +4,12 @@
 
 {% block base_content %}
 
-      
+
   <div class="card mb-3" id="ordersTable" data-list='{"valueNames":["order","date","address","status","amount"],"page":10,"pagination":true}'>
     <div class="card-header">
       <div class="row flex-between-center">
         <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Orders</h5>
+          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Recettes</h5>
         </div>
         <div class="col-8 col-sm-auto ms-auto text-end ps-0">
       
@@ -59,7 +59,7 @@
                 <div class="form-check fs-0 mb-0 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="checkbox-0" data-bulk-select-row="data-bulk-select-row" /></div>
               </td> #}
               <td class="order py-2 align-middle white-space-nowrap">
-                <a href="order-details.html"><strong>{{ rendezVousItem.code }}</strong></a> 
+                <a href="{{ path('meetings_ctrl_find') }}?code={{ rendezVousItem.id }}"><strong>{{ rendezVousItem.code }}</strong></a>
                 {# <a href="mailto:ricky@example.com">{{ rendezVousItem.fkPatient?rendezVousItem.fkPatient.nom:""  }}</a></td> #}
               <td class="patient py-2 align-middle">{{rendezVousItem.fkPatient?rendezVousItem.fkPatient.nom:"" }} </td>
               <td class="date py-2 align-middle">{{rendezVousItem.dateRendezVous|date('Y-m-d') }} </td>
@@ -75,7 +75,7 @@
               {{rendezVousItem.diagnostic }}
               
               </td>
-              <td class="status py-2 align-middle text-center fs-0 white-space-nowrap"><span class="badge badge rounded-pill d-block badge-soft-success">Completed<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span></td>
+              <td class="status py-2 align-middle text-center fs-0 white-space-nowrap">{{ rendezVousItem.statutTextClassName|raw }}</td>
               <td class="amount py-2 text-end fs-0 fw-medium text-nowrap">
                 {% for cotation in rendezVousItem.tRendezPrestations|filter(v=> v.state is same as(true)) %}
                     {% if cotation.state is same as(true)%}
