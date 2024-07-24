@@ -112,7 +112,7 @@
 						</div>
 						<div class="mb-3 col-6">
 							<label class="fs-0" for="fnMeetingDate">Date de rendez-vous</label>
-							<input class="form-control datetimepicker flatpickr-input fnMeeting" id="fnMeetingDate" value="{{ 'now'|date('Y-m-d') }}"  type="date" required="required" name="startDate" />
+							<input class="form-control datetimepicker flatpickr-input fnMeeting" id="fnMeetingDate" value="{{ 'now'|date('Y-m-d H:i') }}"  type="date" required="required" name="startDate" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}'/>
 						</div>
 							<div class="mb-3 col-12">
 
@@ -263,11 +263,11 @@
 
 					{
 				title: "{{ rendezVousItem.code }}",
-				start: "{{ rendezVousItem.dateRendezVous|date('Y-m-d') }}",
-				
+				start: "{{ rendezVousItem.dateRendezVous|date('Y-m-d H:i') }}",
 				description: 'The starting of the programming contest',
 				className: '{{ rendezVousItem.statutTextCalendar }}',
-				url: '{{ path('meetings_ctrl_find') }}?code={{ rendezVousItem.id }}'
+				url: '{{ path('meetings_ctrl_find') }}?code={{ rendezVousItem.id }}',
+
 				}, 
 
 				{% endfor %}
@@ -320,6 +320,7 @@
 					headerToolbar: false,
 					dayMaxEvents: 2,
 					height: 800,
+					timeZone: 'UTC',
 					stickyHeaderDates: false,
 					views: {
 					week: {
@@ -333,9 +334,10 @@
 					meridiem: true
 					},
 					events: eventList,
+
 					eventClick: function eventClick(info) {
 					if (info.event.url) {
-						window.open(info.event.url, '_blank');
+						window.open(info.event.url, '_self');
 						info.jsEvent.preventDefault();
 					} else {
 						var template = getTemplate(info.event);
@@ -424,21 +426,7 @@
 
 
 
-			introJs().setOptions({
-  steps: [{
-    title: 'Welcome',
-    intro: 'Hello World! 👋'
-  },
-  {
-    element: document.querySelector('.btnCreateMeeting'),
-    intro: 'This <b>STEP</b> focuses on an image. <br/> We also used some HTML tags!'
-  },
-  {
-    title: 'Farewell!',
-    element: document.getElementById('#addEventModa'),
-    intro: '<img src="https://images.unsplash.com/photo-1608096299210-db7e38487075?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" />'
-  }]
-}).start();
+
 		})
 	</script>
 {% endblock %}

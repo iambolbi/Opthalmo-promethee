@@ -88,13 +88,13 @@ class MeetingsController extends AbstractController
         if (!$prestation)
             return $this->functions->error(ErrorHttp::MSG_PRESTATION_NOT_FOUND, ['action' => __METHOD__, 'fk_login' => $this->getUser()]);
         
-    
-        
+   // dd($data->date_rendez_vous);
+
         $rendezvous = (new TRendezVous())->setDiagnostic($data->description)
         ->setFkLogin($this->functions->getUser($this->getUser()))
         ->setFkPatient($patient)
         ->setStatut(0)
-            ->setDateRendezVous($this->functions->dateCreate($data->date_rendez_vous));
+            ->setDateRendezVous($this->functions->dateCreate($data->date_rendez_vous,'Y-m-d H:i'));
 
         $this->functions->em()->persist($rendezvous);
         $this->functions->em()->flush();

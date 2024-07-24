@@ -25,125 +25,168 @@
 {#		</div>#}
 {#	</div>#}
 
-	<div class="card mb-3">
-		<div class="card-header bg-light">
-			<p class="fs--1 mb-0"><strong>{{ rendezVous.code }}</strong>
-
-			</p>
-		</div>
-		<div class="card-body">
-
-			<div class="row align-items-center">
-				<div class="col">
-					<h6 class="text-500">Invoice to</h6>
-					<h5>Antonio Banderas</h5>
-					<p class="fs--1">1954 Bloor Street West<br />Torronto ON, M6P 3K9<br />Canada</p>
-					<p class="fs--1"><a href="mailto:example@gmail.com">example@gmail.com</a><br /><a href="tel:444466667777">+4444-6666-7777</a></p>
+	<div class="row g-0">
+		<div class="col-lg-8">
+			<div class="card mb-3">
+				<div class="card-header bg-primary text-dark">
+					<p class="fs--1 mb-0"><strong>{{ rendezVous.code }}</strong>
+					</p>
 				</div>
-				<div class="col-sm-auto ms-auto">
-					<div class="table-responsive">
-						<table class="table table-sm table-borderless fs--1">
-							<tbody>
-							<tr>
-								<th class="text-sm-end">Invoice No:</th>
-								<td>14</td>
-							</tr>
-							<tr>
-								<th class="text-sm-end">Order Number:</th>
-								<td>AD20294</td>
-							</tr>
-							<tr>
-								<th class="text-sm-end">Invoice Date:</th>
-								<td>2018-09-25</td>
-							</tr>
-							<tr>
-								<th class="text-sm-end">Payment Due:</th>
-								<td>Upon receipt</td>
-							</tr>
-							<tr class="alert-success fw-bold">
-								<th class="text-sm-end">Amount Due:</th>
-								<td>$19688.40</td>
-							</tr>
-							</tbody>
-						</table>
+				<div class="card-body">
+
+					<div class="row align-items-center">
+						<div class="col">
+							<h6 class="text-500">Patient </h6>
+							<h5>{{ rendezVous.fkPatient?rendezVous.fkPatient.nom:"" }}</h5>
+
+						</div>
+						<div class="col-sm-auto ms-auto">
+							<div class="table-responsive">
+								<table class="table table-sm table-borderless fs--1">
+									<tbody>
+									<tr>
+										<th class="text-sm-end">Invoice No:</th>
+										<td>14</td>
+									</tr>
+									<tr>
+										<th class="text-sm-end">Order Number:</th>
+										<td>AD20294</td>
+									</tr>
+									<tr>
+										<th class="text-sm-end">Invoice Date:</th>
+										<td>2018-09-25</td>
+									</tr>
+									<tr>
+										<th class="text-sm-end">Payment Due:</th>
+										<td>Upon receipt</td>
+									</tr>
+									<tr class="alert-success fw-bold">
+										<th class="text-sm-end">Amount Due:</th>
+										<td>$19688.40</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					{#			<div class="table-responsive scrollbar mt-4 fs--1">#}
+					{#				<table class="table table-striped border-bottom">#}
+					{#					<thead class="light">#}
+					{#					<tr class="bg-primary text-white dark__bg-1000">#}
+					{#						<th class="border-0">Products</th>#}
+					{#						<th class="border-0 text-center">Quantity</th>#}
+					{#						<th class="border-0 text-end">Rate</th>#}
+					{#						<th class="border-0 text-end">Amount</th>#}
+					{#					</tr>#}
+					{#					</thead>#}
+					{#					<tbody>#}
+					{#					<tr>#}
+					{#						<td class="align-middle">#}
+					{#							<h6 class="mb-0 text-nowrap">Platinum web hosting package</h6>#}
+					{#							<p class="mb-0">Down 35mb, Up 100mb</p>#}
+					{#						</td>#}
+					{#						<td class="align-middle text-center">2</td>#}
+					{#						<td class="align-middle text-end">$65.00</td>#}
+					{#						<td class="align-middle text-end">$130.00</td>#}
+					{#					</tr>#}
+					{#					<tr>#}
+					{#						<td class="align-middle">#}
+					{#							<h6 class="mb-0 text-nowrap">2 Page website design</h6>#}
+					{#							<p class="mb-0">Includes basic wireframes and responsive templates</p>#}
+					{#						</td>#}
+					{#						<td class="align-middle text-center">1</td>#}
+					{#						<td class="align-middle text-end">$2,100.00</td>#}
+					{#						<td class="align-middle text-end">$2,100.00</td>#}
+					{#					</tr>#}
+					{#					<tr>#}
+					{#						<td class="align-middle">#}
+					{#							<h6 class="mb-0 text-nowrap">Mobile App Development</h6>#}
+					{#							<p class="mb-0">Includes responsive navigation</p>#}
+					{#						</td>#}
+					{#						<td class="align-middle text-center">8</td>#}
+					{#						<td class="align-middle text-end">$5,00.00</td>#}
+					{#						<td class="align-middle text-end">$4,000.00</td>#}
+					{#					</tr>#}
+					{#					<tr>#}
+					{#						<td class="align-middle">#}
+					{#							<h6 class="mb-0 text-nowrap">Web App Development</h6>#}
+					{#							<p class="mb-0">Includes react spa</p>#}
+					{#						</td>#}
+					{#						<td class="align-middle text-center">6</td>#}
+					{#						<td class="align-middle text-end">$2,000.00</td>#}
+					{#						<td class="align-middle text-end">$12,000.00</td>#}
+					{#					</tr>#}
+					{#					</tbody>#}
+					{#				</table>#}
+					{#			</div>#}
+					{#			<div class="row justify-content-end">#}
+					{#				<div class="col-auto">#}
+					{#					<table class="table table-sm table-borderless fs--1 text-end">#}
+					{#						<tr>#}
+					{#							<th class="text-900">Subtotal:</th>#}
+					{#							<td class="fw-semi-bold">$18,230.00 </td>#}
+					{#						</tr>#}
+					{#						<tr>#}
+					{#							<th class="text-900">Tax 8%:</th>#}
+					{#							<td class="fw-semi-bold">$1458.40</td>#}
+					{#						</tr>#}
+					{#						<tr class="border-top">#}
+					{#							<th class="text-900">Total:</th>#}
+					{#							<td class="fw-semi-bold">$19688.40</td>#}
+					{#						</tr>#}
+					{#						<tr class="border-top border-top-2 fw-bolder text-900">#}
+					{#							<th>Amount Due:</th>#}
+					{#							<td>$19688.40</td>#}
+					{#						</tr>#}
+					{#					</table>#}
+					{#				</div>#}
+					{#			</div>#}
+				</div>
+
+			</div>
+		</div>
+		<div class="col-lg-4 ps-lg-2">
+
+			<div class="card mb-3">
+				<div class="card-header bg-primary text-dark">
+					<h5 class="mb-0"> <strong> Paiement</strong> </h5>
+				</div>
+				<div class="card-body fs--1">
+					<div class="d-flex btn-reveal-trigger">
+						<div class="calendar"><span class="calendar-month">Feb</span><span class="calendar-day">21</span></div>
+						<div class="flex-1 position-relative ps-3">
+							<h6 class="fs-0 mb-0"><a href="event-detail.html">Newmarket Nights</a></h6>
+							<p class="mb-1">Organized by <a href="#!" class="text-700">University of Oxford</a></p>
+							<p class="text-1000 mb-0">Time: 6:00AM</p>
+							<p class="text-1000 mb-0">Duration: 6:00AM - 5:00PM</p>Place: Cambridge Boat Club, Cambridge<div class="border-dashed-bottom my-3"></div>
+						</div>
+					</div>
+					<div class="d-flex btn-reveal-trigger">
+						<div class="calendar"><span class="calendar-month">Dec</span><span class="calendar-day">31</span></div>
+						<div class="flex-1 position-relative ps-3">
+							<h6 class="fs-0 mb-0"><a href="event-detail.html">31st Night Celebration</a></h6>
+							<p class="mb-1">Organized by <a href="#!" class="text-700">Chamber Music Society</a></p>
+							<p class="text-1000 mb-0">Time: 11:00PM</p>
+							<p class="text-1000 mb-0">280 people interested</p>Place: Tavern on the Greend, New York<div class="border-dashed-bottom my-3"></div>
+						</div>
+					</div>
+					<div class="d-flex btn-reveal-trigger">
+						<div class="calendar"><span class="calendar-month">Dec</span><span class="calendar-day">16</span></div>
+						<div class="flex-1 position-relative ps-3">
+							<h6 class="fs-0 mb-0"><a href="event-detail.html">Folk Festival</a></h6>
+							<p class="mb-1">Organized by <a href="#!" class="text-700">Harvard University</a></p>
+							<p class="text-1000 mb-0">Time: 9:00AM</p>
+							<p class="text-1000 mb-0">Location: Cambridge Masonic Hall Association</p>Place: Porter Square, North Cambridge
+						</div>
 					</div>
 				</div>
+				<div class="card-footer bg-light p-0 border-top"><a class="btn btn-link d-block w-100" href="event-list.html">All Events<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
 			</div>
-{#			<div class="table-responsive scrollbar mt-4 fs--1">#}
-{#				<table class="table table-striped border-bottom">#}
-{#					<thead class="light">#}
-{#					<tr class="bg-primary text-white dark__bg-1000">#}
-{#						<th class="border-0">Products</th>#}
-{#						<th class="border-0 text-center">Quantity</th>#}
-{#						<th class="border-0 text-end">Rate</th>#}
-{#						<th class="border-0 text-end">Amount</th>#}
-{#					</tr>#}
-{#					</thead>#}
-{#					<tbody>#}
-{#					<tr>#}
-{#						<td class="align-middle">#}
-{#							<h6 class="mb-0 text-nowrap">Platinum web hosting package</h6>#}
-{#							<p class="mb-0">Down 35mb, Up 100mb</p>#}
-{#						</td>#}
-{#						<td class="align-middle text-center">2</td>#}
-{#						<td class="align-middle text-end">$65.00</td>#}
-{#						<td class="align-middle text-end">$130.00</td>#}
-{#					</tr>#}
-{#					<tr>#}
-{#						<td class="align-middle">#}
-{#							<h6 class="mb-0 text-nowrap">2 Page website design</h6>#}
-{#							<p class="mb-0">Includes basic wireframes and responsive templates</p>#}
-{#						</td>#}
-{#						<td class="align-middle text-center">1</td>#}
-{#						<td class="align-middle text-end">$2,100.00</td>#}
-{#						<td class="align-middle text-end">$2,100.00</td>#}
-{#					</tr>#}
-{#					<tr>#}
-{#						<td class="align-middle">#}
-{#							<h6 class="mb-0 text-nowrap">Mobile App Development</h6>#}
-{#							<p class="mb-0">Includes responsive navigation</p>#}
-{#						</td>#}
-{#						<td class="align-middle text-center">8</td>#}
-{#						<td class="align-middle text-end">$5,00.00</td>#}
-{#						<td class="align-middle text-end">$4,000.00</td>#}
-{#					</tr>#}
-{#					<tr>#}
-{#						<td class="align-middle">#}
-{#							<h6 class="mb-0 text-nowrap">Web App Development</h6>#}
-{#							<p class="mb-0">Includes react spa</p>#}
-{#						</td>#}
-{#						<td class="align-middle text-center">6</td>#}
-{#						<td class="align-middle text-end">$2,000.00</td>#}
-{#						<td class="align-middle text-end">$12,000.00</td>#}
-{#					</tr>#}
-{#					</tbody>#}
-{#				</table>#}
-{#			</div>#}
-{#			<div class="row justify-content-end">#}
-{#				<div class="col-auto">#}
-{#					<table class="table table-sm table-borderless fs--1 text-end">#}
-{#						<tr>#}
-{#							<th class="text-900">Subtotal:</th>#}
-{#							<td class="fw-semi-bold">$18,230.00 </td>#}
-{#						</tr>#}
-{#						<tr>#}
-{#							<th class="text-900">Tax 8%:</th>#}
-{#							<td class="fw-semi-bold">$1458.40</td>#}
-{#						</tr>#}
-{#						<tr class="border-top">#}
-{#							<th class="text-900">Total:</th>#}
-{#							<td class="fw-semi-bold">$19688.40</td>#}
-{#						</tr>#}
-{#						<tr class="border-top border-top-2 fw-bolder text-900">#}
-{#							<th>Amount Due:</th>#}
-{#							<td>$19688.40</td>#}
-{#						</tr>#}
-{#					</table>#}
-{#				</div>#}
-{#			</div>#}
 		</div>
-
 	</div>
+
+
+
 
 	<div class="modal fade" id="addEventModal" tabindex="-1">
 		<div class="modal-dialog modal-lg">
@@ -311,188 +354,9 @@
 			CreateMeeting();
 			});
 
-			var events = [
-
-				{% for rendezVousItem in rendezVous %}
-
-					{
-				title: "{{ rendezVousItem.code }}",
-				start: "{{ rendezVousItem.dateRendezVous|date('Y-m-d') }}",
-				
-				description: 'The starting of the programming contest',
-				className: '{{ rendezVousItem.statutTextClassName }}',
-				url: 'http://google.com'
-				}, 
-
-				{% endfor %}
-
-				];
-
-			var meetingCalendarInit = function meetingCalendarInit() {
-
-				var Selectors = {
-				ACTIVE: '.active',
-				ADD_EVENT_FORM: '#addEventForm',
-				ADD_EVENT_MODAL: '#addEventModal',
-				CALENDAR: '#meetingCalendar',
-				CALENDAR_TITLE: '.calendar-title',
-				DATA_CALENDAR_VIEW: '[data-fc-view]',
-				DATA_EVENT: '[data-event]',
-				DATA_VIEW_TITLE: '[data-view-title]',
-				EVENT_DETAILS_MODAL: '#eventDetailsModal',
-				EVENT_DETAILS_MODAL_CONTENT: '#eventDetailsModal .modal-content',
-				EVENT_START_DATE: '#addEventModal [name="startDate"]',
-				INPUT_TITLE: '[name="title"]'
-				};
-				var Events = {
-				CLICK: 'click',
-				SHOWN_BS_MODAL: 'shown.bs.modal',
-				SUBMIT: 'submit'
-				};
-				var DataKeys = {
-				EVENT: 'event',
-				FC_VIEW: 'fc-view'
-				};
-				var ClassNames = {
-				ACTIVE: 'active'
-				};
-				var eventList = events.reduce(function (acc, val) {
-				return val.schedules ? acc.concat(val.schedules.concat(val)) : acc.concat(val);
-				}, []);
-			
-				var updateTitle = function updateTitle(title) {
-				document.querySelector(Selectors.CALENDAR_TITLE).textContent = title;
-				};
-			
-				var meetingCalendar = document.querySelector(Selectors.CALENDAR);
-				var addEventForm = document.querySelector(Selectors.ADD_EVENT_FORM);
-				var addEventModal = document.querySelector(Selectors.ADD_EVENT_MODAL);
-				var eventDetailsModal = document.querySelector(Selectors.EVENT_DETAILS_MODAL);
-			
-				if (meetingCalendar) {
-				var calendar = renderCalendar(meetingCalendar, {
-					headerToolbar: false,
-					dayMaxEvents: 2,
-					height: 800,
-					stickyHeaderDates: false,
-					views: {
-					week: {
-						eventLimit: 3
-					}
-					},
-					eventTimeFormat: {
-					hour: 'numeric',
-					minute: '2-digit',
-					omitZeroMinute: true,
-					meridiem: true
-					},
-					events: eventList,
-					eventClick: function eventClick(info) {
-					if (info.event.url) {
-						window.open(info.event.url, '_blank');
-						info.jsEvent.preventDefault();
-					} else {
-						var template = getTemplate(info.event);
-						document.querySelector(Selectors.EVENT_DETAILS_MODAL_CONTENT).innerHTML = template;
-						var modal = new window.bootstrap.Modal(eventDetailsModal);
-						modal.show();
-					}
-					},
-					dateClick: function dateClick(info) {
-					var modal = new window.bootstrap.Modal(addEventModal);
-					modal.show();
-					/*eslint-disable-next-line*/
-			
-					var flatpickr = document.querySelector(Selectors.EVENT_START_DATE)._flatpickr;
-			
-					flatpickr.setDate([info.dateStr]);
-					}
-				});
-				updateTitle(calendar.currentData.viewTitle);
-				document.querySelectorAll(Selectors.DATA_EVENT).forEach(function (button) {
-					button.addEventListener(Events.CLICK, function (e) {
-					var el = e.currentTarget;
-					var type = utils.getData(el, DataKeys.EVENT);
-			
-					switch (type) {
-						case 'prev':
-						calendar.prev();
-						updateTitle(calendar.currentData.viewTitle);
-						break;
-			
-						case 'next':
-						calendar.next();
-						updateTitle(calendar.currentData.viewTitle);
-						break;
-			
-						case 'today':
-						calendar.today();
-						updateTitle(calendar.currentData.viewTitle);
-						break;
-			
-						default:
-						calendar.today();
-						updateTitle(calendar.currentData.viewTitle);
-						break;
-					}
-					});
-				});
-				document.querySelectorAll(Selectors.DATA_CALENDAR_VIEW).forEach(function (link) {
-					link.addEventListener(Events.CLICK, function (e) {
-					e.preventDefault();
-					var el = e.currentTarget;
-					var text = el.textContent;
-					el.parentElement.querySelector(Selectors.ACTIVE).classList.remove(ClassNames.ACTIVE);
-					el.classList.add(ClassNames.ACTIVE);
-					document.querySelector(Selectors.DATA_VIEW_TITLE).textContent = text;
-					calendar.changeView(utils.getData(el, DataKeys.FC_VIEW));
-					updateTitle(calendar.currentData.viewTitle);
-					});
-				});
-				addEventForm && addEventForm.addEventListener(Events.SUBMIT, function (e) {
-					e.preventDefault();
-					var _e$target = e.target,
-						title = _e$target.title,
-						startDate = _e$target.startDate,
-						endDate = _e$target.endDate,
-						label = _e$target.label,
-						description = _e$target.description,
-						allDay = _e$target.allDay;
-					calendar.addEvent({
-					title: title.value,
-					start: startDate.value,
-					end: endDate.value ? endDate.value : null,
-					allDay: allDay.checked,
-					className: allDay.checked && label.value ? "bg-soft-".concat(label.value) : '',
-					description: description.value
-					});
-					e.target.reset();
-					window.bootstrap.Modal.getInstance(addEventModal).hide();
-				});
-				}
-			
-				
-			};
-
-			docReady(meetingCalendarInit);
 
 
 
-			introJs().setOptions({
-  steps: [{
-    title: 'Welcome',
-    intro: 'Hello World! 👋'
-  },
-  {
-    element: document.querySelector('.btnCreateMeeting'),
-    intro: 'This <b>STEP</b> focuses on an image. <br/> We also used some HTML tags!'
-  },
-  {
-    title: 'Farewell!',
-    element: document.getElementById('#addEventModa'),
-    intro: '<img src="https://images.unsplash.com/photo-1608096299210-db7e38487075?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" />'
-  }]
-}).start();
 		})
 	</script>
 {% endblock %}
